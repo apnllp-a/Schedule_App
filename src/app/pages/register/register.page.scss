@@ -1,0 +1,19 @@
+
+.header-bar{
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
+}
+.img-header{
+    filter: invert(1);
+    display: flex;
+    justify-content: center;
+}
+
+ion-content{
+    --background: var( --ion-color-success);
+}
+
+ion-item{
+    margin-top:10px;
+}

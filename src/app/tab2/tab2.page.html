@@ -1,17 +1,60 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+//display
+<div class="ion-page" id="main-content-to">
+  <ion-header>
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <div class="navbar-header">
+        <ion-title>TOTAL</ion-title>
+      <ion-menu-toggle>
+        <ion-button color="clear"><ion-img  class="user-img" src="../../../assets/images/bundha.jpg" ></ion-img>&nbsp; Art Apinan</ion-button>
+      </ion-menu-toggle>
+      </div>
     </ion-toolbar>
   </ion-header>
+  <ion-content class="ion-padding">
+   
+    <div class="card-container">
+      <ion-card color="success" style="height:25%; position: relative;" >
+        <div class="flex-card">
+          <ion-card-header>
+            <ion-card-title class="text-header-card ">ระยะเวลาทำงาน</ion-card-title>
+            <ion-card-subtitle>หมายเหตุ</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content class="text-total"  >
+            36 วัน
+          </ion-card-content>
+        </div>
+      </ion-card>
+      
+      <ion-card color="warning" style="height:20%">
+        <div class="flex-card">
+          <ion-card-header>
+            <ion-card-title class="text-header-card ">ลาพักร้อนคงเหลือ</ion-card-title>
+            <ion-card-subtitle>คิดเป็นชั่วโมง</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content class="text-total">
+            72 ชม.
+          </ion-card-content>
+        </div>
+       
+      </ion-card>
+      
+      <ion-card color="danger" style="height:20%;">
+        <div class="flex-card">
+          <ion-card-header>
+            <ion-card-title class="text-header-card ">วันลาที่เหลือ</ion-card-title>
+            <ion-card-subtitle>คิดเป็นชั่วโมง</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content class="text-total">
+            24 ชม.
+          </ion-card-content>
+        </div>
+       
+      </ion-card>
+    </div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
-</ion-content>
+  </ion-content>
+</div>
