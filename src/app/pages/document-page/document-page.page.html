@@ -1,19 +1,78 @@
-
 <div class="ion-page" id="main-content-doc">
   <ion-header>
-    <ion-toolbar>
-      <div class="navbar-header">
-        <ion-title>DOCUMENT</ion-title>
-      <ion-menu-toggle >
-        <ion-button color="clear"><ion-img  class="user-img" src="../../../assets/images/bundha.jpg" ></ion-img>&nbsp; Art Apinan</ion-button>
-      </ion-menu-toggle>
-      </div>
-    </ion-toolbar>
+
   </ion-header>
-  <ion-content class="ion-padding">
-   
-    
+  <ion-content style="--padding-bottom:75px;" class="ion-padding">
+    <div class="title-name">
+      <h3>Document</h3>
+      <p>{{todayNumber | date}}</p>
+    </div>
+    <div class="selection">
+      <h6>เลือกประเภทเอกสาร</h6>
+      <ion-list>
+        <ion-item>
+          <ion-select aria-label="Fruit" interface="popover" placeholder="เลือกประเภทเอกสาร">
+            <ion-select-option value="apples">เอกสารการลา</ion-select-option>
+            <ion-select-option value="oranges">เอกสารรายงาน</ion-select-option>
+            <ion-select-option value="bananas">เอกสารการแลกเปลี่ยนเวร</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <div class="document-detail">
+      <div class="title-document">
+        <p>รายงาน.......</p>
+      </div>
+
+
+      <div class="send-to">
+        <p>เรียน</p>
+        <ion-item>
+          <ion-input label="Floating label" labelPlacement="floating" placeholder="Enter text"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="details">
+        <ion-item>
+          <ion-textarea style="text-indent: 25px;
+          border: 1px solid #769FCD;
+          border-radius: 8px;
+          padding: 10px;" placeholder="Type something here" [autoGrow]="true"
+            value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tellus sem, auctor accumsan egestas sed, venenatis at ex. Nam consequat ex odio, suscipit rhoncus orci dictum eget. Aenean sit amet ligula varius felis facilisis lacinia nec volutpat nulla. Duis ullamcorper sit amet turpis sed blandit. Integer pretium massa eu faucibus interdum.">
+          </ion-textarea>
+        </ion-item>
+      </div>
+
+      <div class="approver">
+        <div class="emp">
+          <p>ชื่อพนักงาน</p>
+          <ion-item>
+            <ion-input label="Floating label" labelPlacement="floating" placeholder="Enter text"></ion-input>
+          </ion-item>
+          <p>{{todayNumber| date}}</p>
+        </div>
+        <div class="hr">
+          <p>ฝ่ายบุคล</p>
+          <ion-item>
+            <ion-input label="Floating label" labelPlacement="floating" placeholder="Enter text"></ion-input>
+          </ion-item>
+          <p>{{todayNumber| date}}</p>
+        </div>
+        <div class="manage">
+          <p>ฝ่ายบริหาร</p>
+          <ion-item>
+            <ion-input label="Floating label" labelPlacement="floating" placeholder="Enter text"></ion-input>
+          </ion-item>
+          <p>{{todayNumber| date}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-g">
+      <ion-button class="save">บันทึก</ion-button>
+      <ion-button  class="refresh" fill="outline">Refresh</ion-button>
+    </div>
 
   </ion-content>
 </div>
-

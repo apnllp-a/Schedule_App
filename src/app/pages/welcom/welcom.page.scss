@@ -1,0 +1,17 @@
+.flex-center-welcome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+ion-img{
+    margin: 0 auto;
+    width: 80%;
+}
+ion-button {
+    font-weight: 700;
+    --background:#769FCD ;
+    --border-radius: 15px;
+    width: 70%;
+}

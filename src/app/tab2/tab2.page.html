@@ -1,59 +1,61 @@
-
 //display
 <div class="ion-page" id="main-content-to">
-  <ion-header>
-    <ion-toolbar>
-      <div class="navbar-header">
-        <ion-title>TOTAL</ion-title>
-      <ion-menu-toggle>
-        <ion-button color="clear"><ion-img  class="user-img" src="../../../assets/images/bundha.jpg" ></ion-img>&nbsp; Art Apinan</ion-button>
-      </ion-menu-toggle>
-      </div>
-    </ion-toolbar>
-  </ion-header>
+
   <ion-content class="ion-padding">
-   
+    <div class="navbar">
+      <h2>ชื่อแผนก</h2>
+      <div class="btn">
+        <h4></h4>
+        <ion-button expand="block" fill="clear" shape="round">
+          Apinan Limlampai
+        </ion-button>
+      </div>
+    </div>
     <div class="card-container">
-      <ion-card color="success" style="height:25%; position: relative;" >
+      <ion-card class="main-card" style="height:20%; position: relative;">
         <div class="flex-card">
           <ion-card-header>
             <ion-card-title class="text-header-card ">ระยะเวลาทำงาน</ion-card-title>
             <ion-card-subtitle>หมายเหตุ</ion-card-subtitle>
           </ion-card-header>
-        
-          <ion-card-content class="text-total"  >
-            36 วัน
-          </ion-card-content>
-        </div>
-      </ion-card>
-      
-      <ion-card color="warning" style="height:20%">
-        <div class="flex-card">
-          <ion-card-header>
-            <ion-card-title class="text-header-card ">ลาพักร้อนคงเหลือ</ion-card-title>
-            <ion-card-subtitle>คิดเป็นชั่วโมง</ion-card-subtitle>
-          </ion-card-header>
-        
+
           <ion-card-content class="text-total">
-            72 ชม.
+            36 วัน.
           </ion-card-content>
         </div>
-       
       </ion-card>
-      
-      <ion-card color="danger" style="height:20%;">
-        <div class="flex-card">
+
+      <ion-card class="sub-card">
+        <div>
           <ion-card-header>
-            <ion-card-title class="text-header-card ">วันลาที่เหลือ</ion-card-title>
-            <ion-card-subtitle>คิดเป็นชั่วโมง</ion-card-subtitle>
+            <ion-card-title class="text-header-card ">รายละเอียดการมาทำงาน</ion-card-title>
           </ion-card-header>
-        
-          <ion-card-content class="text-total">
-            24 ชม.
+
+          <ion-card-content>
+            <div class="date-all">
+              <div class="date-remaining">
+                <h3 class="text-mess-re">สาย</h3>
+                <br>
+                <p><span>2</span> ชั่วโมง <br><span> 14</span> นาที</p>
+              </div>
+              <div class="date-remaining img-date">
+                <img src="../../assets/images/time.svg" alt="">
+              </div>
+              <div class="date-remaining img-date">
+                <img src="../../assets/images/human-calendar.svg" alt="">
+              </div>
+              <div class="date-remaining">
+                <h3 class="text-mess">เหลือพักร้อน</h3>
+                <br>
+                <p><span>10</span> วัน<span><br> 14</span> ชั่วโมง</p>
+              </div>
+            </div>
           </ion-card-content>
         </div>
-       
+
       </ion-card>
+
+
     </div>
 
   </ion-content>

@@ -6,6 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+
+  
+  tabSlot:string | undefined;
+
+  friendCount=5;
+  notificationCount=10;
   constructor() {}
 
 }

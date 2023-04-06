@@ -35,6 +35,14 @@
   --ion-color-success-shade: #28ba62;
   --ion-color-success-tint: #42d77d;
 
+  /** Schedule **/
+  --ion-color-schedule: #2dd36f;
+  --ion-color-schedule-rgb: 45, 211, 111;
+  --ion-color-schedule-contrast: #ffffff;
+  --ion-color-schedule-contrast-rgb: 255, 255, 255;
+  --ion-color-schedule-shade: #28ba62;
+  --ion-color-schedule-tint: #42d77d;
+
   /** warning **/
   --ion-color-warning: #ffc409;
   --ion-color-warning-rgb: 255, 196, 9;
@@ -197,10 +205,10 @@
    */
 
   .md body {
-    --ion-background-color: #121212;
+    --ion-background-color: #fff;
     --ion-background-color-rgb: 18,18,18;
 
-    --ion-text-color: #ffffff;
+    --ion-text-color: #272727;
     --ion-text-color-rgb: 255,255,255;
 
     --ion-border-color: #222222;
@@ -225,12 +233,12 @@
     --ion-color-step-900: #e7e7e7;
     --ion-color-step-950: #f3f3f3;
 
-    --ion-item-background: #1e1e1e;
+    --ion-item-background: #fff;
 
-    --ion-toolbar-background: #1f1f1f;
+    --ion-toolbar-background: #fff;
 
-    --ion-tab-bar-background: #1f1f1f;
+    --ion-tab-bar-background: #fff;
 
-    --ion-card-background: #1e1e1e;
+    --ion-card-background: #fff;
   }
 }

@@ -6,7 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['document-page.page.scss']
 })
 export class Tab1Page {
-
+  todayNumber: number = Date.now();
+  
+  
+  
   constructor() {}
 
 }

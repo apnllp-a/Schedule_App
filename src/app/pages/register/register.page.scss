@@ -5,15 +5,29 @@
     align-items: center;
 }
 .img-header{
-    filter: invert(1);
     display: flex;
+    width: 155px;
+    margin: 0 auto;
     justify-content: center;
 }
-
+.card-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+}
 ion-content{
-    --background: var( --ion-color-success);
+    --background:#fff;
+}
+ion-button{
+    color: #ffffff;
+    font-weight: 700;
+    --background:#769FCD;
 }
 
 ion-item{
     margin-top:10px;
+   
 }
+.custom {
+    --height: 20px;
+  }

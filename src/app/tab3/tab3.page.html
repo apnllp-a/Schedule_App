@@ -1,18 +1,32 @@
 
 <div class="ion-page" id="main-content-sc">
   <ion-header>
-    <ion-toolbar>
-      <div class="navbar-header">
-        <ion-title>SCHEDULE</ion-title>
-      <ion-menu-toggle>
-        <ion-button color="clear"><ion-img  class="user-img" src="../../../assets/images/bundha.jpg" ></ion-img>&nbsp; Art Apinan</ion-button>
-      </ion-menu-toggle>
-      </div>
-    </ion-toolbar>
+    
   </ion-header>
   <ion-content class="ion-padding">
-   
-  <app-explore-container  name="Tab 1 page"></app-explore-container>
+   <h3>การแจ้งเตือน</h3>
+
+ <!-- มีข้อมูล -->
+    <ion-item class="item-noti" ngIf="false" *ngFor="let a of fakeArray; let index = index" button detail lines="full">
+      <ion-label style="line-height: 35px;">เอกสารการลางาน {{ index +1 }}  <br>
+        <p style="text-indent: 15px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus error esse labore? Fuga atque sapiente cupiditate modi praesentium repellendus non enim eveniet unde, est incidunt, voluptas error quam perferendis?</p>
+      </ion-label>
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-item>
+
+
+    <!-- ไม่มีข้อมูล -->
+    <div class="non_notification">
+      
+      <img alt="Notifications" src="../../assets/images/no-notification.svg" />
+      <ion-card-header>
+        <ion-card-title style="color:#769FCD ;">ไม่มีการแจ้งเตือน </ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content style="text-align: center;">
+        คุณไม่มีการแจ้งเตือนอยู๋ในขณะนี้ <ion-icon style="color: red;" name="alert-outline"></ion-icon>
+      </ion-card-content>
+    </div>
 
   </ion-content>
 </div>

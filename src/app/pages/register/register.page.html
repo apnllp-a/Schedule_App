@@ -1,9 +1,8 @@
 <ion-header>
   <ion-toolbar >
     <div class="header-bar">
-      <ion-button routerLink="/login" color="success"><ion-icon name="home-outline"></ion-icon></ion-button>
-    <ion-title ><ion-img class="img-header" src="../../../assets/images/logo-sch-bg.png" alt="Logo-sch"></ion-img></ion-title>
-    <ion-button color="success"><ion-icon name="refresh-outline"></ion-icon></ion-button>
+
+    <ion-img class="img-header" src="../../../assets/images/logo-sch-bg.png" alt="Logo-sch"></ion-img>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -11,17 +10,17 @@
 <ion-content>
   <ion-card>
     <ion-card-header >
-      <ion-card-title>REGISTER</ion-card-title>
+      <div class="card-header">
+        <ion-card-title><H2 style="color: #272727;">Sign-up</H2></ion-card-title>
+  <ion-button routerLink="/welcome" ><ion-icon name="home-outline"></ion-icon></ion-button>
+      </div>
+
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item fill="outline">
+      <ion-item fill="outline" class="custom">
         <ion-label position="floating">Name</ion-label>
         <ion-input type="text" ></ion-input>
-      </ion-item>
-      <ion-item fill="outline">
-        <ion-label position="floating">Tal</ion-label>
-        <ion-input type="number" ></ion-input>
       </ion-item>
       <ion-item fill="outline">
         <ion-label position="floating">Email</ion-label>
@@ -37,7 +36,7 @@
       </ion-item>
     </ion-card-content>
     <ion-card-content>
-      <ion-button color="success" size="full">Sign Up !</ion-button>
+      <ion-button style="width: 100%;">Sign Up !</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

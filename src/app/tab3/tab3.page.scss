@@ -2,27 +2,33 @@ ion-content {
     --background: #fff;
 }
 
-.navbar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.side-menu-title {
-    padding: 0 10px;
-    display: flex;
-}
-
-.list-menu {
+ion-item::part(native) {
     background: #fff;
-}
+    color: #769FCD;
+    border-color: #769FCD;
+    border-width: 1px;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  ion-item::part(detail-icon) {
+    display: none;
+  }
+  .item-noti {
+   ::ng-deep ion-icon{
+        color: #769FCD;
+    }
+  }
 
-.item-menu {
-    --background: #fff;
-    color: #090909;
-}
+  //ไม่ข้อมูล
+  /* iOS places the subtitle above the title */
+ion-card-header.ios {
+    display: flex;
+    flex-flow: column-reverse;
+  }
 
-.user-img {
-    width: 40px;
-    height: 40px;
-}
+  .non_notification{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
