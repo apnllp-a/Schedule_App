@@ -1,6 +1,43 @@
 ion-content {
     --background: #fff;
 }
+ion-toolbar{
+    --background: #769fcd;
+    
+}
+
+ion-card.header-card{
+    --background: #769FCD;
+    box-shadow: none;
+    ion-card-title{
+        font-size: 24px;
+    }
+    ion-card-title , ion-card-subtitle {
+        --color: #fff;
+      }
+    
+}
+ion-card.report-card{
+    box-shadow: none;
+    ion-card-title , ion-card-subtitle {
+        --color: #769fcd;
+      }
+
+    .textarea-style{
+        border: #769FCD 1px solid;
+        border-radius: 4px;
+        min-height: 220px;
+    }
+}
+ion-card.name-confirm{
+    box-shadow: none;
+    ion-card-title , ion-card-subtitle {
+        --color: #d7e3f1;
+      }
+      ion-input{
+        background: #d7e8fa;
+      }
+}
 
 .title-name {
     display: flex;
@@ -11,6 +48,11 @@ ion-content {
         display: flex;
         align-items: end;
     }
+}
+
+.send-to{
+    display: flex;
+    align-items: center;
 }
 
 
@@ -28,56 +70,31 @@ ion-item::part(native) {
     border: none;
 }
 
-.document-detail {
  
-    .send-to{
-        display: flex;
-        align-items: center;
-    }
+    
     .approver {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-
+        gap: 12px;
         .emp,
         .hr,
         .manage {
-            width: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
-
             ion-item {
                 text-align: center;
             }
         }
     }
-}
 .btn-g{
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-around;
     ion-button.save {
-        width: 100px;
         --background: #769FCD;
         --background-hover: #769FCD;
         --background-activated: #769FCD;
         --background-focused: #769FCD;
         --color: #fff;
-        --ripple-color: #769fcdab;
-        --padding-top: 10px;
-        --padding-bottom: 10px;
-      }
-
-    ion-button.refresh {
-        --background: #fff;
-        --background-hover: #fff;
-        --background-activated: #fff;
-        --background-focused: #fff;
-        --color: #769FCD;
-        --border-color: #769FCD;
-        --border-style: solid;
-        --border-width: 1px;
         --ripple-color: #769fcdab;
         --padding-top: 10px;
         --padding-bottom: 10px;

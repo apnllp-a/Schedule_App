@@ -1,5 +1,5 @@
 ion-content {
-    --background: #F7FBFC;
+    --background: #ffffff;
 }
 
 .navbar {
@@ -10,6 +10,9 @@ ion-content {
         width: 50%;
         display: flex;
         flex-direction: column;
+        ion-button{
+            color: #769FCD;
+        }
     }
 }
 
@@ -62,7 +65,7 @@ ion-content {
 
     .main-card,
     .sub-card {
-        border-radius: 36px;
+        border-radius: 16px;
         height: 50%;
 
     }
@@ -87,7 +90,7 @@ ion-content {
                 background: #769FCD;
 
                 .text-mess-re {
-                    font-weight: 600;
+                    color: #090909;
                     background-color: #F7FBFC;
                     position: absolute;
                     border: 5px solid #769FCD;
@@ -99,7 +102,7 @@ ion-content {
                 }
 
                 .text-mess {
-                    font-weight: 600;
+                    color: #090909;
                     background-color: #F7FBFC;
                     position: absolute;
                     border: 5px solid #769FCD;
@@ -110,7 +113,6 @@ ion-content {
                 }
 
                 p {
-                    font-weight: 600;
                     line-height: 40px;
                     color: #F7FBFC;
                     font-size: 18px;
@@ -131,13 +133,13 @@ ion-content {
     }
 }
 
-::ng-deep ion-card {
-    background: #769FCD;
-}
+// ::ng-deep ion-card {
+//     background: #769FCD;
+// }
 
-::ng-deep ion-card.sub-card {
-    background: #F7FBFC;
-}
+// ::ng-deep ion-card.sub-card {
+//     background: #F7FBFC;
+// }
 
 
 .flex-card {

@@ -2,11 +2,14 @@
 <div class="ion-page" id="main-content-to">
 
   <ion-content class="ion-padding">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <div class="navbar">
       <h2>ชื่อแผนก</h2>
       <div class="btn">
         <h4></h4>
-        <ion-button expand="block" fill="clear" shape="round">
+        <ion-button  routerLink="/tabs/tab4" expand="block" fill="clear" shape="round">
           Apinan Limlampai
         </ion-button>
       </div>

@@ -1,33 +1,61 @@
-
-.header-bar{
+.header-bar {
     display: flex;
     padding: 0 10px;
     align-items: center;
 }
-.img-header{
+
+.img-header {
     display: flex;
     width: 155px;
     margin: 0 auto;
     justify-content: center;
 }
-.card-header{
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-}
-ion-content{
-    --background:#fff;
-}
-ion-button{
-    color: #ffffff;
-    font-weight: 700;
-    --background:#769FCD;
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-ion-item{
-    margin-top:10px;
-   
+ion-content {
+    --background: #fff;
 }
+
+ion-button {
+    color: #ffffff;
+    font-weight: 700;
+    --background: #769FCD;
+}
+
+ion-item {
+    margin-top: 10px;
+
+}
+
 .custom {
     --height: 20px;
+}
+
+ion-item.pass,
+ion-item.custom {
+    --background: #fff;
+   
+    // ion-label {
+    //     color: #769FCD;
+    //     font-weight: 500;
+    // }
+
+}
+.has-focus {
+    border: none !important;
+  }
+ion-select.pass:focus ,ion-select.custom:focus {
+    outline: none;
+    border: none;
+  }
+
+ ::ng-deep .loader-css-class{
+    --background: #769FCD;
+    
+
   }

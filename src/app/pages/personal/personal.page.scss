@@ -1,0 +1,72 @@
+.ion-page{
+    padding: 0  0  50px 0;
+}
+.content-personal {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    .data-user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        .img-user {
+            width: 150px;
+            // border: 6px solid #769FCD;
+            border-radius: 100px !important;
+            overflow: hidden;
+
+        }
+
+        .name-tag {
+           
+            span{
+                color: #769FCD;
+            }
+            width: 90%;
+            text-align: center;
+
+        }
+
+        .details,
+        .pass-lock,
+        .date {
+           
+            padding: 10px;
+            border: #769FCD 1px solid;
+            border-radius: 4px;
+            h4 {
+                width: max-content;
+                padding-bottom: 10px;
+                border-bottom: 4px solid #769FCD;
+            }
+
+            width: 90%;
+        }
+
+        .btn-group{
+            display: flex;
+        }
+        
+
+        ion-button {
+            color: #ffffff;
+            font-weight: 700;
+            --background: #769FCD;
+        }
+
+    }
+    .pd-mg{
+        .details,
+        .pass-lock,
+        .date{
+              display: flex;
+        flex-direction: column;
+        gap: 10px;
+        }
+      
+    }
+}

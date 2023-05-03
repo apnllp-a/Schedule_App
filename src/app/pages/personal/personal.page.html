@@ -1,7 +1,101 @@
 <ion-header>
-  
+
 </ion-header>
+<div class="ion-page" id="main-content-to">
+    <ion-content class="ion-padding">
+        <div class="content-personal">
+            <div class="header">
+                <h3>ข้อมูลส่วนตัว</h3>
+                <ion-icon  (click)="passAlert()" style="color: #769FCD;" size="large" slot="start"
+                    [name]="passToggleIcon"></ion-icon>
+            </div>
+            <div class="data-user" *ngIf="btn == 'true'">
+                <!-- <div class="img-user">
+                    <ion-img src="../../../assets/images/logo-sch.png" alt=""> </ion-img>
+                </div> -->
+                <div class="name-tag">
+                    <h2>Apinan Limlampai</h2>
+                    <span> @Apnllp</span>
+                </div>
+                <div class="details">
+                    <h4>ข้อมูลต่างๆ</h4>
+                    <p>ตำแหน่งงาน</p>
+                    <p>แผนก</p>
+                    <p>ที่อยู่</p>
+                    <p>เบอร์โทรศัพท์</p>
+                </div>
+                <div class="date">
+                    <h4>วันเดือน ปี เกิด</h4>
+                    <p> 20/06/2541</p>
+                    <p>อายุ 25 ปี</p>
+                </div>
+                <div class="pass-lock">
+                    <h4>รหัสผ่าน</h4>
+                    <p>*********</p>
+                </div>
+            </div>
 
-<ion-content>
 
-</ion-content>
+            <div class="data-user pd-mg" *ngIf="btn == 'false'">
+                <!-- <div class="img-user">
+                    <ion-img src="../../../assets/images/logo-sch.png" alt=""> </ion-img>
+                </div> -->
+                <div class="name-tag">
+                    <h2>Apinan Limlampai</h2>
+                    <span> @Apnllp</span>
+                </div>
+                <div class="details">
+                    <h4>ข้อมูลต่างๆ</h4>
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>ตำแหน่งงาน : </ion-label>
+                        <ion-input type="text" placeholder="ตำแหน่งงาน"></ion-input>
+                    </ion-item>
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>แผนก : </ion-label>
+                        <ion-input type="text" placeholder="แผนก"></ion-input>
+                    </ion-item>
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>ที่อยู่ : </ion-label>
+                        <ion-input type="text" placeholder="ที่อยู่"></ion-input>
+                    </ion-item>
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>เบอร์โทรศัพท์ : </ion-label>
+                        <ion-input type="text" placeholder="เบอร์โทรศัพท์"></ion-input>
+                    </ion-item>
+
+                </div>
+                <div class="date">
+                    <h4>วันเดือน ปี เกิด</h4>
+
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>Date : </ion-label>
+                        <ion-input type="date" placeholder="20/06/2541"></ion-input>
+                    </ion-item>
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>อายุ : </ion-label>
+                        <ion-input type="text" placeholder="25 ปี"></ion-input>
+                    </ion-item>
+
+                </div>
+                <div class="pass-lock">
+                    <h4>รหัสผ่าน</h4>
+                    <ion-item fill="outline" class="custom">
+                        <ion-label>Password : </ion-label>
+                        <ion-input [type]="showpass ? 'text':'password'" placeholder="********"></ion-input>
+                        <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end"
+                            [name]="passToggleIconpass"></ion-icon>
+                    </ion-item>
+
+                </div>
+                <div class="btn-group">
+                    <ion-button (click)="presentAlert()">อัพเดตข้อมูล</ion-button>
+                    <ion-button (click)=" presentAlertMultipleButtons()">ยกเลิก</ion-button>
+                </div>
+
+            </div>
+        </div>
+
+    </ion-content>
+
+
+</div>

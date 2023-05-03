@@ -1,15 +1,14 @@
-ion-button[color="dark"]{
-    text-transform: initial;
-}
+
 ion-button{
     font-weight: 700;
 }
 .login-btn{
-    width: 100%;
     --background: #769FCD;
 }
 ion-content{
     --background: #769FCD;
+    --keyboard-offset: 0 !important;
+
 }
 
 ion-card-title {
