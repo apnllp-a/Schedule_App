@@ -1,6 +1,14 @@
+// ion-content {
+//     --background: #ffffff;
+// }
+
 ion-content {
-    --background: #ffffff;
-}
+    --background: none;
+    background-image: url('../../assets/images/Tax-bro.png');
+    // background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
 .navbar {
     display: flex;
@@ -10,7 +18,8 @@ ion-content {
         width: 50%;
         display: flex;
         flex-direction: column;
-        ion-button{
+
+        ion-button {
             color: #769FCD;
         }
     }
@@ -41,15 +50,16 @@ ion-content {
     height: 100%;
 
     .main-card {
-        background: hsl(212, 47%, 63%, .7);
+        background: rgb(118, 159, 205);
+        // background: linear-gradient(153deg, rgba(118, 159, 205, 1) 0%, rgba(215, 232, 250, 1) 96%, rgba(247, 251, 252, 1) 100%);
         border-radius: 16px;
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(2.3px);
         -webkit-backdrop-filter: blur(2.3px);
-        ;
-        border: 1px solid rgba(168, 224, 255, 0.27);
+        // border: 1px solid rgba(168, 224, 255, 0.27);
 
-        ion-card-subtitle , ion-card-content {
+        ion-card-subtitle,
+        ion-card-content {
             color: #fff;
         }
     }
@@ -66,7 +76,7 @@ ion-content {
     .main-card,
     .sub-card {
         border-radius: 16px;
-        height: 50%;
+        // height: 50%;
 
     }
 
@@ -76,18 +86,23 @@ ion-content {
 
     .sub-card {
         .date-all {
-            height: 260px;
+            height: 365px;
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
             justify-content: center;
+            padding-bottom: 16px;
 
             .date-remaining {
                 position: relative;
                 width: 45%;
                 border-radius: 16px;
                 padding: 4px 15px;
-                background: #769FCD;
+                background: rgb(118, 159, 205);
+        // background: linear-gradient(153deg, rgba(118, 159, 205, 1) 0%, rgba(215, 232, 250, 1) 96%, rgba(247, 251, 252, 1) 100%);
+        //         justify-content: center;
+                align-items: center;
+                display: flex;
 
                 .text-mess-re {
                     color: #090909;
@@ -97,7 +112,7 @@ ion-content {
                     border-radius: 16px;
                     padding: 4px 12px;
                     top: -10px;
-                    left: 35px;
+                    // left: 35px;
 
                 }
 
@@ -109,7 +124,7 @@ ion-content {
                     border-radius: 16px;
                     padding: 4px 12px;
                     top: -10px;
-                    left: 10px;
+                    // left: 10px;
                 }
 
                 p {
@@ -155,5 +170,5 @@ ion-content {
 }
 
 .text-header-card {
-    font-size: 27px;
+    font-size: 25px;
 }

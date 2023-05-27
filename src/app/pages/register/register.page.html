@@ -24,26 +24,35 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-item fill="outline" class="custom">
-        <ion-label position="floating">Name : </ion-label>
-        <ion-input  type="text"></ion-input>
-      </ion-item>
-      <ion-item fill="outline" class="custom">
-        <ion-label position="floating">Email : </ion-label>
-        <ion-input type="email"></ion-input>
-      </ion-item>
-      <ion-item fill="outline" class="custom">
-        <ion-label position="floating">Username : </ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
-      <ion-item fill="outline" class="pass">
-        <ion-label position="floating">Password : </ion-label>
-        <ion-input [type]="showpass ? 'text':'password'"></ion-input>
-        <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end" [name]="passToggleIcon"></ion-icon>
-      </ion-item>
+
+      <!-- <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate> -->
+        <ion-item fill="outline" class="custom">
+          <ion-label position="floating">Name : </ion-label>
+          <ion-input  type="text" [(ngModel)]="tutorial.firstname" helperText="Enter a valid email"
+          errorText="Invalid email" required></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom">
+          <ion-label position="floating" >Email : </ion-label>
+          <ion-input type="email" [(ngModel)]="tutorial.email" helperText="Enter a valid email"
+          errorText="Invalid email"  
+          email required></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom">
+          <ion-label position="floating">Username : </ion-label>
+          <ion-input type="text" [(ngModel)]="tutorial.username" helperText="Enter a valid email"
+          errorText="Invalid email" required></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="pass">
+          <ion-label position="floating">Password : </ion-label>
+          <ion-input [type]="showpass ? 'text':'password'" [(ngModel)]="tutorial.password" helperText="Enter a valid email"
+          errorText="Invalid email" required></ion-input>
+          <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end" [name]="passToggleIcon"></ion-icon>
+        </ion-item>
+      <!-- </form> -->
+      
     </ion-card-content>
     <ion-card-content>
-      <ion-button (click)="  presentAalert()" style="width: 100%;">Sign Up !</ion-button>
+      <ion-button (click)="save_Register()" style="width: 100%;">Sign Up !</ion-button>
     </ion-card-content>
 
   </ion-card>

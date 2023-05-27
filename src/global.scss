@@ -9,6 +9,8 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
  @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Prompt:wght@100;200;300;400;500;600;700;800&display=swap');
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
 
@@ -36,5 +38,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 * {
-    font-family: 'Kanit', sans-serif;
+    // font-family: 'Kanit', sans-serif;
+    //font-family: 'Open Sans', sans-serif;
+    font-family: 'Prompt', sans-serif;
 }

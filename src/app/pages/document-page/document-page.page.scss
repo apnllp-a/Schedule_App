@@ -2,12 +2,19 @@ ion-content {
     --background: #fff;
 }
 ion-toolbar{
-    --background: #769fcd;
+    // --background: rgb(118,159,205)
+    --background: rgb(118, 159, 205);
+    // --background: linear-gradient(153deg, rgba(118, 159, 205, 1) 0%, rgba(215, 232, 250, 1) 96%, rgba(247, 251, 252, 1) 100%);;
+    border-radius: 0 0 15% 15%;
     
 }
 
+ion-header {
+     z-index:0; 
+}
+
 ion-card.header-card{
-    --background: #769FCD;
+    background: transparent;
     box-shadow: none;
     ion-card-title{
         font-size: 24px;

@@ -1,6 +1,20 @@
 .ion-page{
     padding: 0  0  50px 0;
 }
+
+// ion-content{
+
+//     --ion-background-color: rgb(118,159,205);
+//     --ion-background-color: linear-gradient(153deg, rgba(118,159,205,1) 0%, rgba(215,232,250,1) 96%, rgba(247,251,252,1) 100%);
+// }
+
+ion-content {
+    --background: none;
+    background-image: url('../../../assets/images/save\ time-rafiki.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 .content-personal {
     .header {
         display: flex;
@@ -30,21 +44,28 @@
             text-align: center;
 
         }
+        h5 {
+            margin-left: 0;
+            font-weight: 300;
+            width: max-content;
+            // padding-bottom: 5px;
+            // border-bottom: 4px solid #769FCD;
+        }
 
         .details,
         .pass-lock,
         .date {
+            background: #fff;
+            padding: 10px 40px;
+            // border: #769FCD 1px solid;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
            
-            padding: 10px;
-            border: #769FCD 1px solid;
-            border-radius: 4px;
-            h4 {
-                width: max-content;
-                padding-bottom: 10px;
-                border-bottom: 4px solid #769FCD;
-            }
-
             width: 90%;
+            p{
+                // border-bottom:1px solid #d5d5d5;
+                padding-bottom: 10px;
+            }
         }
 
         .btn-group{
