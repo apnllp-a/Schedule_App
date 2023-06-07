@@ -1,12 +1,31 @@
 module.exports = mongoose => {
   var userAll_schema = mongoose.Schema(
     {
-      firstname: String,
-      lastname: String,
-      username: String,
-      password: String,
-      email: String,
-      tal:String,
+      firstname:{
+        type:String,
+        require:[true,'please enter a firstname']
+      },
+      lastname:{
+        type:String,
+        require:[true,'please enter a lastname']
+      },
+      
+      username:{
+        type:String,
+        require:[true,'please enter a username']
+      },
+      password:{
+        type:String,
+        require:[true,'please enter a password']
+      },
+      email:{
+        type:String,
+        require:[true,'please enter a email']
+      },
+      tal:{
+        type:String,
+        require:[true,'please enter a tal']
+      },
       published: Boolean
     },
     { timestamps: true }

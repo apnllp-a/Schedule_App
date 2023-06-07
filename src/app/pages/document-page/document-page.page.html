@@ -1,15 +1,15 @@
 <div class="ion-page" id="main-content-doc">
-  <ion-header >
+  <ion-header>
     <ion-toolbar>
       <ion-title>
-     
-    <ion-card  class="header-card">
-      <ion-card-header>
-        <ion-card-title>Document</ion-card-title>
-        <ion-card-subtitle style="text-align: right;">{{todayNumber | date}}</ion-card-subtitle>
-      </ion-card-header>
-      
-    </ion-card>
+
+        <ion-card class="header-card">
+          <ion-card-header>
+            <ion-card-title>Document</ion-card-title>
+            <ion-card-subtitle style="text-align: right;">{{todayNumber | date}}</ion-card-subtitle>
+          </ion-card-header>
+
+        </ion-card>
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -23,13 +23,12 @@
       <ion-card-header>
         <ion-card-title>เลือกประเภทเอกสาร</ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content>
         <ion-list>
           <ion-item lines="none">
-            <ion-select  
-            (ionChange)="handleChange($event)"
-            aria-label="Fruit" interface="popover" placeholder="เลือกประเภทเอกสาร">
+            <ion-select (ionChange)="handleChange($event)" aria-label="Fruit" interface="popover"
+              placeholder="เลือกประเภทเอกสาร">
               <ion-select-option value="เอกสารการลา">เอกสารการลา</ion-select-option>
               <ion-select-option value="เอกสารรายงาน">เอกสารรายงาน</ion-select-option>
               <ion-select-option value="เอกสารการแลกเปลี่ยนเวร">เอกสารการแลกเปลี่ยนเวร</ion-select-option>
@@ -40,26 +39,25 @@
         <div class="title-document">
           <p><span style="font-weight: 600;color: #769fcd;">รายงาน</span> {{currentFood}}</p>
         </div>
-  
-  
+
+
         <div class="send-to">
           <p style="font-weight: 600;color: #769fcd;">เรียน</p>
           <ion-item lines="none">
-            <ion-input   class="custom" placeholder="กรุณาพิมพ์ ชื่อ"></ion-input>
+            <ion-input class="custom" placeholder="กรุณาพิมพ์ ชื่อ"></ion-input>
           </ion-item>
         </div>
 
         <ion-item lines="none">
           <ion-textarea class="textarea-style" style="text-indent: 25px;
-          padding: 10px;" placeholder="พิมพ์ข้อความ" [autoGrow]="true"
-            value="">
+          padding: 10px;" placeholder="พิมพ์ข้อความ" [autoGrow]="true" value="">
           </ion-textarea>
         </ion-item>
 
       </ion-card-content>
     </ion-card>
 
-    <ion-card class="name-confirm">
+    <!-- <ion-card class="name-confirm">
       <ion-card-content>
         <div class="approver">
           <div class="emp">
@@ -86,7 +84,7 @@
         </div>
 
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
 
     <ion-card style="  box-shadow: none;">
       <ion-card-content>
@@ -95,6 +93,6 @@
         </div>
       </ion-card-content>
     </ion-card>
-   
+
   </ion-content>
 </div>

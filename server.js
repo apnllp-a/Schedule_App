@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
+const cookieSession = require("cookie-session");
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -14,7 +15,15 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
+app.use(
+  cookieSession({
+    name: "Schudule-session",
+    secret: "COOKIE_SECRET", // should use as secret environment variable
+    httpOnly: true
+  })
+);
 
 
 const db = require("./src/app/backend/models");
@@ -30,7 +39,7 @@ db.mongoose
     console.log("Cannot connect to the database!", err);
     process.exit();
   });
-  
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder applicationzzzzzzzzzz." });
@@ -39,8 +48,30 @@ app.get("/userAll", (req, res) => {
   res.json({ message: "Welcome to Appp" });
 });
 
+
+const userRoutes = require('./src/app/backend/routes/UserRoutes')
+app.use('/users', userRoutes);
+
+db.mongoose.connect(db.url, { useUnifiedTopology: true }).then(() => {
+  app.listen(() => {
+    console.log('app running...')
+  })
+}).catch(err => console.log(err))
+
+
+
+
+
+
+
+
+
+
+
+
+
 require("./src/app/backend/routes/routes")(app);
-  
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -4,20 +4,24 @@
 <div class="ion-page" id="main-content-to">
     <ion-content class="ion-padding">
         <div class="content-personal">
-            <div class="header">
-                <h3>ข้อมูลส่วนตัว</h3>
-                <ion-icon  (click)="passAlert()" style="color: #769FCD;" size="large" slot="start"
-                    [name]="passToggleIcon"></ion-icon>
+            <div class="head-top">
+                <div class="header">
+                    <h3>ข้อมูลส่วนตัว</h3>
+                    <ion-icon  (click)="passAlert()" style="color: #ffffff;" size="large" slot="start"
+                        [name]="passToggleIcon"></ion-icon>
+                        
+                </div>
+                <div class="name-tag">
+                    <h2>Apinan Limlampai</h2>
+                    <!-- <span> @Apnllp</span> -->
+                </div>
             </div>
             <div class="data-user" *ngIf="btn == 'true'">
                 <!-- <div class="img-user">
                     <ion-img src="../../../assets/images/logo-sch.png" alt=""> </ion-img>
                 </div> -->
-                <div class="name-tag">
-                    <h2>Apinan Limlampai</h2>
-                    <span> @Apnllp</span>
-                </div>
-                <h5>ข้อมูลต่างๆ</h5>
+                
+                <!-- <h5>ข้อมูลต่างๆ</h5> -->
                 <div class="details">
                    
                     <p>ตำแหน่งงาน</p>
@@ -31,14 +35,15 @@
                     <p> 20/06/2541</p>
                     <p>อายุ 25 ปี</p>
                 </div>
-                <h5>รหัสผ่าน</h5>
+               
 
                 <div class="pass-lock">
+                    <h5>รหัสผ่าน</h5>
                     <p>*********</p>
                 </div>
-                <h5>ออกจากระบบ</h5>
-                <div class="pass-lock" style="background-color: transparent;">
-                    <ion-button fill="outline" color="danger" shape="round" style="width:100% ;">ออกจากระบบ</ion-button>
+                <!-- <h5>ออกจากระบบ</h5> -->
+                <div class="pass-lock" >
+                    <ion-button routerLink="/login" fill="outline" color="danger" shape="round" style="width:100% ;">ออกจากระบบ</ion-button>
                 </div>
             </div>
 
@@ -47,10 +52,10 @@
                 <!-- <div class="img-user">
                     <ion-img src="../../../assets/images/logo-sch.png" alt=""> </ion-img>
                 </div> -->
-                <div class="name-tag">
+                <!-- <div class="name-tag">
                     <h2>Apinan Limlampai</h2>
                     <span> @Apnllp</span>
-                </div>
+                </div> -->
                 <h5>ข้อมูลต่างๆ</h5>
                 <div class="details">
                    

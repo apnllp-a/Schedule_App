@@ -7,16 +7,16 @@
    <h3>การแจ้งเตือน</h3>
 
  <!-- มีข้อมูล -->
-    <ion-item class="item-noti" ngIf="false" *ngFor="let a of fakeArray; let index = index" button detail lines="full">
-      <ion-label style="line-height: 35px;">เอกสารการลางาน {{ index +1 }}  <br>
+    <ion-item class="item-noti"  *ngFor="let a of fakeArray; let index = index" button detail lines="full">
+      <ion-label style="line-height: 35px;">เอกสารการลางาน {{ index + 1 }}  <br>
         <p style="text-indent: 15px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus error esse labore? Fuga atque sapiente cupiditate modi praesentium repellendus non enim eveniet unde, est incidunt, voluptas error quam perferendis?</p>
       </ion-label>
       <ion-icon name="ellipsis-vertical"></ion-icon>
-    </ion-item>
+    </ion-item> <br><br>
 
 
     <!-- ไม่มีข้อมูล -->
-    <div class="non_notification">
+    <div class="non_notification" *ngIf="false">
       
       <img alt="Notifications" src="../../assets/images/no-notification.svg" />
       <ion-card-header>

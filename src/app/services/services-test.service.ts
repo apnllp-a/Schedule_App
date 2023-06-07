@@ -37,4 +37,8 @@ export class ServicesTestService {
   findByName(name: any): Observable<Tutorial[]> {
     return this.http.get<Tutorial[]>(`${baseUrl}?firstname=${name}`);
   }
+
+  findUser(user: any): Observable<Tutorial[]> {
+    return this.http.get<Tutorial[]>(`${baseUrl}?firstname=${user}`);
+  }
 }

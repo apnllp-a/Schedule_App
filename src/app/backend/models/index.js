@@ -10,3 +10,10 @@ db.tutorials = require("./model.js")(mongoose);
 db.userAll = require("./user_all_module.js")(mongoose)
 
 module.exports = db;
+
+// module.exports = {
+//     Tutorial: require("./Tutorial"),
+//     Image: require("./Image"),
+//     Comment: require("./Comment"),
+//     Category: require("./Category")
+//   };

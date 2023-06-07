@@ -37,4 +37,7 @@ export class UserAllService {
   findByName(name: any): Observable<UserAll[]> {
     return this.http.get<UserAll[]>(`${baseUrl}?firstname=${name}`);
   }
+  findByUser(user: any): Observable<UserAll[]> {
+    return this.http.get<UserAll[]>(`${baseUrl}?firstname=${user}`);
+  }
 }

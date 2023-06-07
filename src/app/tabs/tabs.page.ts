@@ -10,8 +10,8 @@ export class TabsPage {
   
   tabSlot:string | undefined;
 
-  friendCount=5;
-  notificationCount=10;
+  friendCount=0;
+  notificationCount=12;
   constructor() {}
 
 }

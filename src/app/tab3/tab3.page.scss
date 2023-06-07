@@ -3,12 +3,23 @@ ion-content {
 }
 
 ion-item::part(native) {
-    background: #fff;
-    color: #769FCD;
-    border-color: #769FCD;
-    border-width: 1px;
-    border-radius: 4px;
-    margin-top: 10px;
+    // background: #fff;
+    // color: #769FCD;
+    // border-color: #769FCD;
+    // border-width: 1px;
+    // border-radius: 4px;
+    // margin-top: 10px;
+   
+      background: #fff;
+      color: #769FCD;
+      /* border-color: #769FCD; */
+      width: 95%;
+      /* border-width: 1px; */
+      margin: 0 auto;
+      border-radius: 8px;
+      border: none;
+      box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
   }
   
   ion-item::part(detail-icon) {

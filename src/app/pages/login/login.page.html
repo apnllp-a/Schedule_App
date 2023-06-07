@@ -7,15 +7,15 @@
     
       <ion-card-content>
         <ion-item fill="outline">
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email"></ion-input>
+          <ion-label position="floating"  >Email</ion-label>
+          <ion-input type="email" [(ngModel)]="email"></ion-input>
         </ion-item><br>
         <ion-item fill="outline" >
           <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" ></ion-input>
+          <ion-input type="password" [(ngModel)]="password"></ion-input>
         </ion-item><br>
         <!-- <ion-button color="dark" fill="clear" size="full">Forgot email / password</ion-button> -->
-        <ion-button (click)="loading_login() " size="full"  class="login-btn"  routerLink="/tabs">LOGIN</ion-button>
+        <ion-button (click)="login()" size="full"  class="login-btn"  >LOGIN</ion-button>
         <ion-button  fill="clear" size="full" routerLink="/register" style="color: #769FCD;">REGISTER</ion-button>
       </ion-card-content>
     </ion-card>

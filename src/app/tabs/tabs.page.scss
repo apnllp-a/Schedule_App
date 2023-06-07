@@ -107,3 +107,20 @@ ion-content {
  ::ng-deep ion-icon{
     color: #F7FBFC;
   }
+
+  ion-tab-button{
+    --background-focused: #fff;
+    --color-selected: #fff;
+    // ion-icon{
+    //     font-size: 67.5px;
+    // }
+  }
+  ion-tab-button:active{
+    ion-icon{
+      color: #fff;
+    }
+  }
+
+  ion-tab-button.tab-selected ion-icon {
+    color: #d5d5d5;
+  }
