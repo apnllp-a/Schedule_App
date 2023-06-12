@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { AuthService } from 'src/app/_services/auth.service';
+import { StorageService } from 'src/app/_services/storage.service';
 import { IonLoaderService } from 'src/app/ion-loader.service';
 import { Tutorial } from 'src/app/models/tutorial.model';
 import { UserAll } from 'src/app/models/user/user-all.model';
@@ -17,33 +19,79 @@ import { PassThrough } from 'stream';
 export class LoginPage implements OnInit {
   user_all!: UserAll[];
   user_all_length!: number;
-  username:string | undefined;
+  username: string | undefined;
   email!: String;
   password!: String;
-  
-  constructor(private http:HttpClient ,private userAllService: UserAllService, private tutorialService: ServicesTestService,public loadingController: LoadingController, private ionLoaderService: IonLoaderService, private alertController: AlertController, private route: Router) { }
+
+  //แบบใหม่
+  form: any = {
+    username: null,
+    password: null
+  };
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+
+  constructor(private router: Router,private authService: AuthService, private storageService: StorageService, private http: HttpClient, private userAllService: UserAllService, private tutorialService: ServicesTestService, public loadingController: LoadingController, private ionLoaderService: IonLoaderService, private alertController: AlertController, private route: Router) { }
 
   ngOnInit() {
     const user = localStorage.getItem('User')
-    if(user== null){
-      this.route.navigateByUrl('/login',{replaceUrl:true})
+    if (user == null) {
+      this.route.navigateByUrl('/login', { replaceUrl: true })
     }
 
+    if (this.storageService.isLoggedIn()) {
+      this.isLoggedIn = true;
+      this.roles = this.storageService.getUser().roles;
+    }
+    console.log(this.roles)
+
+  }
+
+ 
+
+  
+  
+  
+  onSubmit(): void {
+    const { username, password } = this.form;
+
+    this.authService.login(username, password).subscribe({
+      next: data => {
+        this.storageService.saveUser(data);
+        
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.storageService.getUser().roles;
+        this.reloadPage();
+       
+        
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
+  }
+
+  reloadPage(): void {
+    // window.location.reload();
+    this.router.navigate(['/tabs']); 
   }
 
 
-
-login(){
-  let credentials ={
-    username:this.username,
-    password:this.password
+  login() {
+    let credentials = {
+      username: this.username,
+      password: this.password
+    }
+    this.http.post('http://localhost:8081/login', credentials).subscribe(res => {
+      console.log(res)
+    }, error => {
+      console.log(error)
+    })
   }
-  this.http.post('http://localhost:8081/login',credentials).subscribe(res=>{
-    console.log(res)
-  },error=>{
-    console.log(error)
-  })
-}
 
 
 
@@ -62,17 +110,17 @@ login(){
       });
   }
 
- loading_login() {
+  loading_login() {
     this.loadingController.create({
-     message: 'กำลังโหลดข้อมูล...',
-     duration: 3000,
-     cssClass: 'loader-css-class',
-     // backdropDismiss: true
-   }).then( (res) => {
-     res.present();
-     this.route.navigate(['/tabs'])
-   });
+      message: 'กำลังโหลดข้อมูล...',
+      duration: 3000,
+      cssClass: 'loader-css-class',
+      // backdropDismiss: true
+    }).then((res) => {
+      res.present();
+      this.route.navigate(['/tabs'])
+    });
 
- }
+  }
 
 }
