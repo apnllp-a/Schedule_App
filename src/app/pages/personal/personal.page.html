@@ -3,7 +3,7 @@
 </ion-header>
 <div class="ion-page" id="main-content-to">
     <ion-content class="ion-padding">
-        <div class="content-personal">
+        <div class="content-personal" *ngIf="currentUser; else loggedOut">
             <div class="head-top">
                 <div class="header">
                     <h3>ข้อมูลส่วนตัว</h3>
@@ -12,7 +12,7 @@
                         
                 </div>
                 <div class="name-tag">
-                    <h2>Apinan Limlampai</h2>
+                    <h2>{{ currentUser.username }}</h2>
                     <!-- <span> @Apnllp</span> -->
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 </div>
                 <!-- <h5>ออกจากระบบ</h5> -->
                 <div class="pass-lock" >
-                    <ion-button routerLink="/login" fill="outline" color="danger" shape="round" style="width:100% ;">ออกจากระบบ</ion-button>
+                    <ion-button (click)="logout()" fill="outline" color="danger" shape="round" style="width:100% ;">ออกจากระบบ</ion-button>
                 </div>
             </div>
 
@@ -109,6 +109,35 @@
 
             </div>
         </div>
+
+        <ng-template #loggedOut>
+            Please login.
+          </ng-template>
+
+
+
+
+
+
+        <!-- <div class="container" >
+            <header class="jumbotron">
+              <h3>
+                <strong></strong> Profile
+              </h3>
+            </header>
+            <p>
+              <strong>Email:</strong>
+              {{ currentUser.email }}
+            </p>
+            <strong>Roles:</strong>
+            <ul>
+              <li *ngFor="let role of currentUser.roles">
+                {{ role }}
+              </li>
+            </ul>
+          </div> -->
+          
+          
 
     </ion-content>
 

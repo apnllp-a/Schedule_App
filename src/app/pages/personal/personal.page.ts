@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { StorageService } from 'src/app/_services/storage.service';
+import { EventBusService } from 'src/app/_shared/event-bus.service';
+import { EventData } from 'src/app/_shared/event.class';
 
 @Component({
   selector: 'app-personal',
@@ -13,12 +17,21 @@ export class PersonalPage implements OnInit {
   showpass = false;
   passToggleIcon = 'settings-outline';
   passToggleIconpass = 'eye';
+  currentUser: any;
+  content?: string;
 
 
-
-  constructor(private alertController: AlertController) { }
+  constructor(private router: Router,private alertController: AlertController,private storageService: StorageService,private eventBusService: EventBusService) { }
 
   ngOnInit() {
+    this.currentUser = this.storageService.getUser();
+
+    
+  }
+
+  logout(){
+    this.eventBusService.emit(new EventData('logout', null));
+    this.router.navigate(['/login']); 
   }
 
   toggle_setting(): void {

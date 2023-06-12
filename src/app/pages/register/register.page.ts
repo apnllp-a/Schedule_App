@@ -7,7 +7,11 @@ import { Tutorial } from 'src/app/models/tutorial.model';
 import { UserAll } from 'src/app/models/user/user-all.model';
 import { ServicesTestService } from 'src/app/services/services-test.service';
 import { UserAllService } from 'src/app/services/user/user-all.service';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms";
+import { AuthService } from 'src/app/_services/auth.service';
+
+
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -17,6 +21,45 @@ export class RegisterPage implements OnInit {
   showpass = false;
   passToggleIcon = 'eye';
   ionicForm!: FormGroup;
+
+//แบบใหม่แบบสับ
+  form: any = {
+    username: null,
+    email: null,
+    password: null
+  };
+  isSuccessful = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+
+
+  validations = {
+    'username': [
+      { type: 'required', message: 'Username is required.' },
+      { type: 'minlength', message: 'Username must be at least 5 characters long.' },
+      { type: 'maxlength', message: 'Username cannot be more than 25 characters long.' },
+      { type: 'pattern', message: 'Your username must contain only numbers and letters.' },
+      { type: 'usernameNotAvailable', message: 'Your username is already taken.' }
+    ],
+    'email': [
+      { type: 'required', message: 'email is required.' },
+      { type: 'minlength', message: 'email must be at least 5 characters long.' },
+      { type: 'maxlength', message: 'email cannot be more than 25 characters long.' },
+      { type: 'pattern', message: 'Your email must contain only numbers and letters.' },
+      { type: 'emailNotAvailable', message: 'Your email is already taken.' }
+    ],
+    'password': [
+      { type: 'required', message: 'password is required.' },
+      { type: 'minlength', message: 'password must be at least 5 characters long.' },
+      { type: 'maxlength', message: 'password cannot be more than 25 characters long.' },
+      { type: 'pattern', message: 'Your password must contain only numbers and letters.' },
+      { type: 'passwordNotAvailable', message: 'Your password is already taken.' }
+    ],
+    // other validations
+  };
+  
+
+
 
   tutorial: Tutorial = {
     username: '',
@@ -32,12 +75,41 @@ export class RegisterPage implements OnInit {
   p_alert: string | undefined;
   user_all!: UserAll[];
   user_all_length!: number;
+  myGroup!: FormGroup;
 
-  constructor(public formBuilder: FormBuilder,private userAllService: UserAllService, private tutorialService: ServicesTestService, public loadingController: LoadingController, private ionLoaderService: IonLoaderService, private alertController: AlertController, private route: Router) {
+  constructor(private authService: AuthService,public formBuilder: FormBuilder, private userAllService: UserAllService, private tutorialService: ServicesTestService, public loadingController: LoadingController, private ionLoaderService: IonLoaderService, private alertController: AlertController, private route: Router) {
     this.retrieveUserAlls()
+    
+  }
+  
+
+
+  onSubmit(): void {
+    const { username, email, password } = this.form;
+
+    this.authService.register(username, email, password).subscribe({
+      next: data => {
+        console.log(data);
+        this.isSuccessful = true;
+        this.isSignUpFailed = false;
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isSignUpFailed = true;
+      }
+    });
   }
 
   ngOnInit() {
+    
+
+    this.myGroup = new FormGroup({
+      firstName: new FormControl(),
+      username: new FormControl(),
+      email: new FormControl(),
+      password: new FormControl()
+  });
+  
   }
 
   // displayAutoLoader() {
@@ -53,16 +125,16 @@ export class RegisterPage implements OnInit {
   //   this.ionLoaderService.customLoader();
   // }
 
-  getDate(e:any) {
+  getDate(e: any) {
     let date = new Date(e.target.value).toISOString().substring(0, 10);
     this.ionicForm.get('dob')!.setValue(date, {
-       onlyself: true
+      onlyself: true
     })
- }
+  }
 
- submitForm() {
-  console.log(this.ionicForm.value)
-}
+  submitForm() {
+    console.log(this.ionicForm.value)
+  }
 
 
   retrieveUserAlls(): void {
@@ -81,7 +153,7 @@ export class RegisterPage implements OnInit {
   save_Register(): void {
     const data = {
       username: this.tutorial.username,
-      password: this.tutorial.password ,
+      password: this.tutorial.password,
       firstname: this.tutorial.firstname,
       lastname: this.tutorial.lastname,
       position: this.tutorial.position,
@@ -90,7 +162,7 @@ export class RegisterPage implements OnInit {
 
     for (let index = 0; index < this.user_all_length; index++) {
       const element = this.user_all[index];
-      if (element.username == data.username ) {
+      if (element.username == data.username) {
         console.log('username invalue');
         return;
       } else {

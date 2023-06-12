@@ -25,34 +25,35 @@
 
     <ion-card-content>
 
-      <!-- <form [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate> -->
+     <!-- <div [formGroup]="myGroup" novalidate>  -->
+       <form [formGroup]="myGroup" *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <ion-item fill="outline" class="custom">
           <ion-label position="floating">Name : </ion-label>
-          <ion-input  type="text" [(ngModel)]="tutorial.firstname" helperText="Enter a valid email"
-          errorText="Invalid email" required></ion-input>
+          <ion-input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="tutorial.firstname" helperText="Enter a valid email"
+            errorText="Invalid email" required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="custom">
-          <ion-label position="floating" >Email : </ion-label>
-          <ion-input type="email" [(ngModel)]="tutorial.email" helperText="Enter a valid email"
-          errorText="Invalid email"  
-          email required></ion-input>
+          <ion-label position="floating">Email : </ion-label>
+          <ion-input type="email" formControlName="email" clearInput [(ngModel)]="form.email" helperText="Enter a valid email"
+            errorText="Invalid email" email required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="custom">
           <ion-label position="floating">Username : </ion-label>
-          <ion-input type="text" [(ngModel)]="tutorial.username" helperText="Enter a valid email"
-          errorText="Invalid email" required></ion-input>
+          <ion-input type="text" formControlName="username" clearInput  [(ngModel)]="form.username" helperText="Enter a valid email"
+            errorText="Invalid email" required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="pass">
           <ion-label position="floating">Password : </ion-label>
-          <ion-input [type]="showpass ? 'text':'password'" [(ngModel)]="tutorial.password" helperText="Enter a valid email"
-          errorText="Invalid email" required></ion-input>
+          <ion-input [type]="showpass ? 'text':'password'" formControlName="password" clearInput [(ngModel)]="form.password"
+            helperText="Enter a valid email" errorText="Invalid email" required></ion-input>
           <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end" [name]="passToggleIcon"></ion-icon>
         </ion-item>
-      <!-- </form> -->
-      
+      </form>
+     <!-- </div> -->
+
     </ion-card-content>
     <ion-card-content>
-      <ion-button (click)="save_Register()" style="width: 100%;">Sign Up !</ion-button>
+      <ion-button  (click)="onSubmit()" style="width: 100%;">Sign Up !</ion-button>
     </ion-card-content>
 
   </ion-card>

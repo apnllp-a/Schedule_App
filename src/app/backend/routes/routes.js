@@ -58,7 +58,7 @@ module.exports = app => {
                     user_id: user._id, email
                 },
                     process.env.TOKEN_KEY, {
-                    expiresIn: "2h"
+                    expiresIn: '2h'
                 }
                 )
                 //save user token
@@ -107,7 +107,7 @@ module.exports = app => {
                 { user_id: user._id, email },
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: "2h"
+                    expiresIn: '2h'
                 }
             )
 
