@@ -1,16 +1,19 @@
 
 module.exports = app => {
+    
     const tutorials = require("../controllers/controller.js");
     const user_All = require("../controllers/user_all_controller.js");
-    const User = require('../models/user_module');
-    const bcrypt = require('bcrypt');
-    const jwt = require('jsonwebtoken');
-    const auth = require('../../middleware/auth');
+    const data_users = require("../controllers/data_users.controller.js")
+    const notifiCations = require("../controllers/notifications.controller.js")
+    // const User = require('../models/user_module');
+    // const bcrypt = require('bcrypt');
+    // const jwt = require('jsonwebtoken');
+    // const auth = require('../../middleware/auth');
     require("dotenv").config();
-
     var router = require("express").Router();
     var routerUserAll = require("express").Router();
-
+    var routerDataUsers = require("express").Router();
+    var routerNotification = require("express").Router();
 
     /*************************  Tutorial *************************/
     //Create a new Tutorial
@@ -37,97 +40,97 @@ module.exports = app => {
     app.use("/api/ScheduleDB", router);
 
 
-    //login 
-    app.post("/login", async (req, res) => {
+    // //login 
+    // app.post("/login", async (req, res) => {
 
-        try {
-            //get user input 
-            const { email, password } = req.body;
+    //     try {
+    //         //get user input 
+    //         const { email, password } = req.body;
 
-            //validate user 
-            if (!(email && password)) {
-                res.status(400).send("All input is required");
-            }
+    //         //validate user 
+    //         if (!(email && password)) {
+    //             res.status(400).send("All input is required");
+    //         }
 
-            //validate if user exists in our database
-            const user = await User.findOne({ email });
+    //         //validate if user exists in our database
+    //         const user = await User.findOne({ email });
 
-            if (user && (await bcrypt.compare(password, user.password))) {
-                //create token
-                const token = jwt.sign({
-                    user_id: user._id, email
-                },
-                    process.env.TOKEN_KEY, {
-                    expiresIn: '2h'
-                }
-                )
-                //save user token
-                user.token = token;
+    //         if (user && (await bcrypt.compare(password, user.password))) {
+    //             //create token
+    //             const token = jwt.sign({
+    //                 user_id: user._id, email
+    //             },
+    //                 process.env.TOKEN_KEY, {
+    //                 expiresIn: '2h'
+    //             }
+    //             )
+    //             //save user token
+    //             user.token = token;
 
-                res.status(200).json(user);
-            }
-            res.status(400).send("Invalid credentials");
+    //             res.status(200).json(user);
+    //         }
+    //         res.status(400).send("Invalid credentials");
 
-        } catch (error) {
+    //     } catch (error) {
 
-        }
+    //     }
 
-    })
+    // })
 
-    //register
-    app.post("/register-page", async (req, res) => {
-        try {
-            //get user input
-            const { first_name, last_name, email, password } = req.body;
-
-
-            //validate user inptu
-            if (!(first_name && last_name && password && email)) {
-                res.status(400).send("All input is required")
-            }
-
-            //check if user already exists
-            const old_user = await User.findOne({ email });
-            if (old_user) {
-                res.status(400).send("User already exists. Please login")
-            }
-
-            //Encrypt user password
-            encryptedPassword = await bcrypt.hash(password, 10)
-
-            //Create new user in our database
-            const user = await User.create({
-                first_name, last_name,
-                email: email.toLowerCase(),
-                password: encryptedPassword
-            })
-
-            //create Token
-            const token = jwt.sign(
-                { user_id: user._id, email },
-                process.env.TOKEN_KEY,
-                {
-                    expiresIn: '2h'
-                }
-            )
-
-            //save user token
-            user.token = token;
-
-            //return new user
-            res.status(201).json(user)
+    // //register
+    // app.post("/register-page", async (req, res) => {
+    //     try {
+    //         //get user input
+    //         const { first_name, last_name, email, password } = req.body;
 
 
-        } catch (error) {
-            console.log(error);
-        }
+    //         //validate user inptu
+    //         if (!(first_name && last_name && password && email)) {
+    //             res.status(400).send("All input is required")
+    //         }
 
-    })
+    //         //check if user already exists
+    //         const old_user = await User.findOne({ email });
+    //         if (old_user) {
+    //             res.status(400).send("User already exists. Please login")
+    //         }
 
-    //Welcome
-    app.post('/welcome', auth, (req, res) => {
-        res.status(200).send("Welcome To  Schedule");
-    })
+    //         //Encrypt user password
+    //         encryptedPassword = await bcrypt.hash(password, 10)
+
+    //         //Create new user in our database
+    //         const user = await User.create({
+    //             first_name, last_name,
+    //             email: email.toLowerCase(),
+    //             password: encryptedPassword
+    //         })
+
+    //         //create Token
+    //         const token = jwt.sign(
+    //             { user_id: user._id, email },
+    //             process.env.TOKEN_KEY,
+    //             {
+    //                 expiresIn: '2h'
+    //             }
+    //         )
+
+    //         //save user token
+    //         user.token = token;
+
+    //         //return new user
+    //         res.status(201).json(user)
+
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+
+    // })
+
+    // //Welcome
+    // app.post('/welcome', auth, (req, res) => {
+    //     res.status(200).send("Welcome To  Schedule");
+    // })
 
     /*************************  UserAll *************************/
     //Create a new UserAll
@@ -152,4 +155,56 @@ module.exports = app => {
     routerUserAll.delete("/", user_All.deleteAll);
 
     app.use("/api/userAll", routerUserAll);
+
+
+
+  
+
+     //Create a new DataUsers
+     routerDataUsers.post("/", data_users.create);
+
+     //Retrieve all  DataUsers
+     routerDataUsers.get("/", data_users.findAll);
+ 
+     //Retrieve all published DataUsers
+     routerDataUsers.get("/published", data_users.findAllPublished);
+ 
+     //Retrieve a single DataUsers with id
+     routerDataUsers.get("/:id", data_users.findOne);
+ 
+     //Update a DataUsers with id
+     routerDataUsers.put("/:id", data_users.update);
+ 
+     //Delete a DataUsers with id
+     routerDataUsers.delete("/:id", data_users.delete);
+ 
+     //Create a new DataUsers
+     routerDataUsers.delete("/", data_users.deleteAll);
+ 
+     app.use("/api/data_users", routerDataUsers);
+
+
+
+      //Create a new Notification
+      routerNotification.post("/", notifiCations.create);
+
+      //Retrieve all  Notification
+      routerNotification.get("/", notifiCations.findAll);
+  
+      //Retrieve all published Notification
+      routerNotification.get("/published", notifiCations.findAllPublished);
+  
+      //Retrieve a single Notification with id
+      routerNotification.get("/:id", notifiCations.findOne);
+  
+      //Update a Notification with id
+      routerNotification.put("/:id", notifiCations.update);
+  
+      //Delete a Notification with id
+      routerNotification.delete("/:id", notifiCations.delete);
+  
+      //Create a new Notification
+      routerNotification.delete("/", notifiCations.deleteAll);
+  
+      app.use("/api/notification", routerNotification);
 };

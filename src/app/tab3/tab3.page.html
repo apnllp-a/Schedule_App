@@ -1,28 +1,39 @@
-
 <div class="ion-page" id="main-content-sc">
   <ion-header>
-    
+
   </ion-header>
-  <ion-content class="ion-padding">
-   <h3>การแจ้งเตือน</h3>
+  <ion-content class="ion-padding" >
 
- <!-- มีข้อมูล -->
-    <ion-item class="item-noti"  *ngFor="let a of fakeArray; let index = index" button detail lines="full">
-      <ion-label style="line-height: 35px;">เอกสารการลางาน {{ index + 1 }}  <br>
-        <p style="text-indent: 15px;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis voluptatibus error esse labore? Fuga atque sapiente cupiditate modi praesentium repellendus non enim eveniet unde, est incidunt, voluptas error quam perferendis?</p>
-      </ion-label>
-      <ion-icon name="ellipsis-vertical"></ion-icon>
-    </ion-item> <br><br>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <h3>การแจ้งเตือน</h3>
 
+    <!-- มีข้อมูล -->
+    <ng-container *ngFor="let a of notifi_; let index = index" >
+      <ion-item *ngIf="a.user_send_id == currentUser.id" class="item-noti" style="padding:5px 20px;"  button detail
+      lines="full">
+        <ion-label style="line-height: 35px;">{{a.type_doc}}<br>
+          <p style="text-indent: 15px;">{{a.desc}}</p>
+        </ion-label>
+        <ion-icon name="ellipsis-vertical" id="open-action-sheet"></ion-icon>
+    </ion-item>
+ <!-- ไม่มีข้อมูล -->
+ 
+   
+    </ng-container> 
+    <br><br>
+    <ion-action-sheet trigger="open-action-sheet" header="Example header" subHeader="Example subheader"
+      [buttons]="actionSheetButtons" (didDismiss)="setResult($event)"></ion-action-sheet>
 
     <!-- ไม่มีข้อมูล -->
-    <div class="non_notification" *ngIf="false">
-      
+    <div class="non_notification" *ngIf="itemCheck == 0 ">
+
       <img alt="Notifications" src="../../assets/images/no-notification.svg" />
       <ion-card-header>
         <ion-card-title style="color:#769FCD ;">ไม่มีการแจ้งเตือน </ion-card-title>
       </ion-card-header>
-    
+
       <ion-card-content style="text-align: center;">
         คุณไม่มีการแจ้งเตือนอยู๋ในขณะนี้ <ion-icon style="color: red;" name="alert-outline"></ion-icon>
       </ion-card-content>

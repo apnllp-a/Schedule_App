@@ -25,35 +25,38 @@
 
     <ion-card-content>
 
-     <!-- <div [formGroup]="myGroup" novalidate>  -->
-       <form [formGroup]="myGroup" *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <!-- <div [formGroup]="myGroup" novalidate>  -->
+      <form [formGroup]="myGroup" *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
+        novalidate>
         <ion-item fill="outline" class="custom">
           <ion-label position="floating">Name : </ion-label>
-          <ion-input type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="tutorial.firstname" helperText="Enter a valid email"
-            errorText="Invalid email" required></ion-input>
+          <ion-input [ngModelOptions]="{standalone: true}" name="name" minlength="3" maxlength="20" #name="ngModel" type="text" [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
+            [(ngModel)]="form.name" 
+            required ></ion-input>
         </ion-item>
+        <div *ngIf="name.hasError('whitespace')">Please enter valid data</div>
         <ion-item fill="outline" class="custom">
           <ion-label position="floating">Email : </ion-label>
-          <ion-input type="email" formControlName="email" clearInput [(ngModel)]="form.email" helperText="Enter a valid email"
-            errorText="Invalid email" email required></ion-input>
+          <ion-input type="email" formControlName="email" clearInput [(ngModel)]="form.email"
+             email required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="custom">
           <ion-label position="floating">Username : </ion-label>
-          <ion-input type="text" formControlName="username" clearInput  [(ngModel)]="form.username" helperText="Enter a valid email"
-            errorText="Invalid email" required></ion-input>
+          <ion-input type="text" formControlName="username" clearInput [(ngModel)]="form.username"
+             required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="pass">
           <ion-label position="floating">Password : </ion-label>
-          <ion-input [type]="showpass ? 'text':'password'" formControlName="password" clearInput [(ngModel)]="form.password"
-            helperText="Enter a valid email" errorText="Invalid email" required></ion-input>
+          <ion-input [type]="showpass ? 'text':'password'" formControlName="password" clearInput
+            [(ngModel)]="form.password"  required></ion-input>
           <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end" [name]="passToggleIcon"></ion-icon>
         </ion-item>
       </form>
-     <!-- </div> -->
+      <!-- </div> -->
 
     </ion-card-content>
     <ion-card-content>
-      <ion-button  (click)="onSubmit()" style="width: 100%;">Sign Up !</ion-button>
+      <ion-button (click)="onSubmit()" style="width: 100%;">Sign Up !</ion-button>
     </ion-card-content>
 
   </ion-card>

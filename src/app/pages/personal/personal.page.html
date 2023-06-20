@@ -7,43 +7,71 @@
             <div class="head-top">
                 <div class="header">
                     <h3>ข้อมูลส่วนตัว</h3>
-                    <ion-icon  (click)="passAlert()" style="color: #ffffff;" size="large" slot="start"
+                    <ion-icon (click)="passAlert()" style="color: #ffffff;" size="large" slot="start"
                         [name]="passToggleIcon"></ion-icon>
-                        
+
                 </div>
                 <div class="name-tag">
-                    <h2>{{ currentUser.username }}</h2>
-                    <!-- <span> @Apnllp</span> -->
+                    <div *ngIf="btn == 'true'">
+                        <h2 *ngIf="currentUser.name == ''">{{ currentDataUser.name }}</h2>
+                        <h2 *ngIf="currentDataUser.name == ''">{{ currentUser.name }}</h2>
+                        <h2 *ngIf="currentDataUser.name != '' || currentUser.name != '' ">{{ currentDataUser.name }}
+                        </h2>
+                    <span> @{{ currentUser.username }}</span>
+
+                    </div>
+                    <div *ngIf="btn == 'false'">
+                        <h2 *ngIf="currentUser.username == ''"> @{{ currentDataUser.name }}</h2>
+                        <h2 *ngIf="currentDataUser.name == ''"> @{{ currentUser.username }}</h2>
+                        <h2 *ngIf="currentDataUser.name != '' || currentUser.username != '' "> @{{ currentUser.name }}
+                        </h2>
+                    </div>
                 </div>
             </div>
             <div class="data-user" *ngIf="btn == 'true'">
                 <!-- <div class="img-user">
                     <ion-img src="../../../assets/images/logo-sch.png" alt=""> </ion-img>
                 </div> -->
-                
+
                 <!-- <h5>ข้อมูลต่างๆ</h5> -->
                 <div class="details">
-                   
-                    <p>ตำแหน่งงาน</p>
-                    <p>แผนก</p>
-                    <p>ที่อยู่</p>
-                    <p>เบอร์โทรศัพท์</p>
-                <!-- </div> -->
-                <!-- <h5>วันเดือน ปี เกิด</h5> -->
+                    <p *ngIf="currentDataUser.department == '' || currentDataUser == ''">ยังไม่ได้กำหนด
+                        <b>ตำแหน่งงาน</b>
+                    </p>
+                    <p *ngIf="currentDataUser.department != ''">ตำแหน่งงาน : {{currentDataUser.position}}</p>
 
-                <!-- <div class="date"> -->
-                    <p> 20/06/2541</p>
-                    <p>อายุ 25 ปี</p>
+                    <p *ngIf="currentDataUser.position == '' || currentDataUser== ''">ยังไม่ได้กำหนด <b>แผนก</b></p>
+                    <p *ngIf="currentDataUser.position != ''">แผนก : {{currentDataUser.department}}</p>
+
+                    <p *ngIf="currentDataUser.address == '' || currentDataUser== ''">ยังไม่ได้กำหนด <b>ที่อยู่</b></p>
+                    <p *ngIf="currentDataUser.address != ''">ที่อยู่ : {{currentDataUser.address}}</p>
+
+                    <p *ngIf="currentDataUser.phone == '' || currentDataUser== ''">ยังไม่ได้กำหนด <b>เบอร์โทรศัพท์</b>
+                    </p>
+                    <p *ngIf="currentDataUser.phone != ''">เบอร์โทรศัพท์ : {{currentDataUser.phone}}</p>
+                    <!-- </div> -->
+                    <!-- <h5>วันเดือน ปี เกิด</h5> -->
+
+                    <!-- <div class="date"> -->
+
+                    <p *ngIf="currentDataUser.phone_iffice == '' || currentDataUser== ''">ยังไม่ได้กำหนด
+                        <b>วันเดือนปีเกิด</b>
+                    </p>
+                    <p *ngIf="currentDataUser.phone_iffice != ''">เกิดเมื่อ : {{currentDataUser.phone_iffice}}</p>
+
+                    <p *ngIf="currentDataUser.age == '' || currentDataUser== ''">ยังไม่ได้กำหนด <b>อายุ</b></p>
+                    <p *ngIf="currentDataUser.age != ''">อายุ {{currentDataUser.age}} ปี</p>
                 </div>
-               
+
 
                 <div class="pass-lock">
                     <h5>รหัสผ่าน</h5>
                     <p>*********</p>
                 </div>
                 <!-- <h5>ออกจากระบบ</h5> -->
-                <div class="pass-lock" >
-                    <ion-button (click)="logout()" fill="outline" color="danger" shape="round" style="width:100% ;">ออกจากระบบ</ion-button>
+                <div class="pass-lock">
+                    <ion-button (click)="logout()" fill="outline" color="danger" shape="round"
+                        style="width:100% ;">ออกจากระบบ</ion-button>
                 </div>
             </div>
 
@@ -52,42 +80,49 @@
                 <!-- <div class="img-user">
                     <ion-img src="../../../assets/images/logo-sch.png" alt=""> </ion-img>
                 </div> -->
-                <!-- <div class="name-tag">
-                    <h2>Apinan Limlampai</h2>
-                    <span> @Apnllp</span>
-                </div> -->
+                <div class="name-tag">
+                    <ion-item class="ion-no-padding custom" lines="none">
+                        <ion-input style="text-align: center;" [(ngModel)]="data_users.name" required type="text"
+                            placeholder="{{data_users.name ? 'ระบุชื่อของคุณ' : 'แก้ไขชื่อของคุณ'}}"></ion-input>
+                    </ion-item>
+                    <!-- <span> @{{ currentUser.name }}</span> -->
+                </div>
                 <h5>ข้อมูลต่างๆ</h5>
                 <div class="details">
-                   
                     <ion-item fill="outline" class="custom">
                         <ion-label>ตำแหน่งงาน : </ion-label>
-                        <ion-input type="text" placeholder="ตำแหน่งงาน"></ion-input>
+                        <ion-input [(ngModel)]="data_users.position" required type="text"
+                        placeholder="{{data_users.position ? 'ระบุตำแหน่งงาน' : 'แก้ไขตำแหน่งงาน'}}"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>แผนก : </ion-label>
-                        <ion-input type="text" placeholder="แผนก"></ion-input>
+                        <ion-input [(ngModel)]="data_users.department" required type="text"
+                        placeholder="{{data_users.name ? 'ระบุแผนก' : 'แก้ไขแผนก'}}"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>ที่อยู่ : </ion-label>
-                        <ion-input type="text" placeholder="ที่อยู่"></ion-input>
+                        <ion-input [(ngModel)]="data_users.address" required type="text"
+                        placeholder="{{data_users.name ? 'ระบุที่อยู่' : 'แก้ไขที่อยู่'}}"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>เบอร์โทรศัพท์ : </ion-label>
-                        <ion-input type="text" placeholder="เบอร์โทรศัพท์"></ion-input>
+                        <ion-input [(ngModel)]="data_users.phone" required type="text"
+                        placeholder="{{data_users.name ? 'ระบุเบอร์โทรศัพท์' : 'แก้ไขเบอร์โทรศัพท์'}}"></ion-input>
                     </ion-item>
 
-                <!-- </div> -->
-                <!-- <h5>วันเดือน ปี เกิด</h5> -->
+                    <!-- </div> -->
+                    <!-- <h5>วันเดือน ปี เกิด</h5> -->
 
-                <!-- <div class="date"> -->
+                    <!-- <div class="date"> -->
 
                     <ion-item fill="outline" class="custom">
-                        <ion-label>Date : </ion-label>
-                        <ion-input type="date" placeholder="20/06/2541"></ion-input>
+                        <ion-label>เกิดเมื่อ : </ion-label>
+                        <ion-input [(ngModel)]="data_users.phone_iffice" required type="date"
+                        placeholder="{{data_users.name ? 'ระบุวันเกิด' : 'แก้ไขวันเกิด'}}"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>อายุ : </ion-label>
-                        <ion-input type="text" placeholder="25 ปี"></ion-input>
+                        <ion-input [(ngModel)]="data_users.age" required type="text" placeholder="{{data_users.name ? 'ระบุอายุของคุณ' : 'แก้ไขอายุของคุณ'}}"></ion-input>
                     </ion-item>
 
                 </div>
@@ -96,14 +131,18 @@
                 <div class="pass-lock">
                     <ion-item fill="outline" class="custom">
                         <ion-label>Password : </ion-label>
-                        <ion-input [type]="showpass ? 'text':'password'" placeholder="********"></ion-input>
+                        <ion-input required [(ngModel)]="passFormUser" [type]="showpass ? 'text':'password'"
+                            [placeholder]="currentUser.password"></ion-input>
                         <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end"
                             [name]="passToggleIconpass"></ion-icon>
                     </ion-item>
+                    <span *ngIf="err_checkPass == false" style="color:red;">**กรุณาตรวจสอบรหัสผ่านอีกครั้ง</span>
+                    <span *ngIf="err_checkPass == true" style="color: green;">**รหัสผ่านถูกต้อง</span>
+                    <ion-button (click)="checkPass(passFormUser)">ตรวจสอบรหัสผ่าน</ion-button>
 
                 </div>
                 <div class="btn-group">
-                    <ion-button (click)="presentAlert()">อัพเดตข้อมูล</ion-button>
+                    <ion-button (click)="saveTutorial()">อัพเดตข้อมูล</ion-button>
                     <ion-button (click)=" presentAlertMultipleButtons()">ยกเลิก</ion-button>
                 </div>
 
@@ -112,7 +151,7 @@
 
         <ng-template #loggedOut>
             Please login.
-          </ng-template>
+        </ng-template>
 
 
 
@@ -136,8 +175,8 @@
               </li>
             </ul>
           </div> -->
-          
-          
+
+
 
     </ion-content>
 

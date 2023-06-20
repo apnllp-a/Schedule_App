@@ -4,36 +4,36 @@ const cors = require("cors");
 const app = express();
 const cookieSession = require("cookie-session");
 
-const allowedOrigins = [
-  'capacitor://localhost',
-  'ionic://localhost',
-  'http://localhost',
-  'http://localhost:8080',
-  'http://localhost:8100',
-  'http://localhost:8081',
-];
+// const allowedOrigins = [
+//   // 'capacitor://localhost',
+//   // 'ionic://localhost',
+//   // 'http://localhost',
+//   'http://localhost:8080',
+//   // 'http://localhost:8100',
+//   'http://localhost:8081',
+// ];
 
 var corsOptions = {
   origin: "http://localhost:8081",
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
+  credentials:true,            
+  //access-control-allow-credentials:true
+  // optionSuccessStatus:200,
   
 };
 
-// app.use(function(req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-//   res.setHeader('Access-Control-Allow-Credentials', true);
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*'); //หรือใส่แค่เฉพาะ domain ที่ต้องการได้
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.use(cors(corsOptions));
 
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -45,10 +45,6 @@ app.use(
     httpOnly: true
   })
 );
-
-
-
-
 
 
 const db = require("./src/app/backend/models");
@@ -67,6 +63,7 @@ db.mongoose
     process.exit();
   });
 
+  
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
@@ -106,13 +103,6 @@ function initial() {
 
 
 
-
-
-// routes
-require('./src/app/backend/routes/auth.routes')(app);
-require('./src/app/backend/routes/user.routes')(app);
-
-
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder applicationzzzzzzzzzz." });
@@ -121,9 +111,19 @@ app.get("/userAll", (req, res) => {
   res.json({ message: "Welcome to Appp" });
 });
 
+app.get("/data_users", (req, res) => {
+  res.json({ message: "Welcome to data_users" });
+});
 
-const userRoutes = require('./src/app/backend/routes/UserRoutes')
-app.use('/users', userRoutes);
+app.get("/notification", (req, res) => {
+  res.json({ message: "Welcome to notification" });
+});
+
+// app.post("/api/data_users", (req, res) => {
+//   res.json({ message: "Welcome to data_users" });
+// });
+
+
 
 db.mongoose.connect(db.url, { useUnifiedTopology: true }).then(() => {
   app.listen(() => {
@@ -132,18 +132,11 @@ db.mongoose.connect(db.url, { useUnifiedTopology: true }).then(() => {
 }).catch(err => console.log(err))
 
 
-
-
-
-
-
-
-
-
-
-
-
+// routes
+require('./src/app/backend/routes/auth.routes')(app);
+require('./src/app/backend/routes/user.routes')(app);
 require("./src/app/backend/routes/routes")(app);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

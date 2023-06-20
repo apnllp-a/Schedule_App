@@ -49,6 +49,20 @@ export class LoginPage implements OnInit {
 
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      
+      header: 'Incorrect'+' '+this.errorMessage,
+      // subHeader: 'The' +this.errorMessage+'you entered is incorrect',
+      message: 'Please try again',
+      buttons: ['OK'],
+      
+    });
+
+    await alert.present();
+
+  }
+
  
 
   
@@ -70,10 +84,21 @@ export class LoginPage implements OnInit {
       },
       error: err => {
         this.errorMessage = err.error.message;
+        console.log(this.errorMessage)
+        if (this.errorMessage =='Username') {
+          this.errorMessage = 'Username!'
+          this.presentAlert()
+        }
+        if (this.errorMessage =='Password!') {
+          this.errorMessage = 'Password!'
+          this.presentAlert()
+        }
         this.isLoginFailed = true;
       }
     });
   }
+
+  
 
   reloadPage(): void {
     // window.location.reload();

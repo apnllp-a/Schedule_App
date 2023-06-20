@@ -24,6 +24,7 @@ export class RegisterPage implements OnInit {
 
 //แบบใหม่แบบสับ
   form: any = {
+    name:null,
     username: null,
     email: null,
     password: null
@@ -70,6 +71,9 @@ export class RegisterPage implements OnInit {
     email: '',
     published: false
   };
+
+
+  
   submitted = false;
   h3_alert: string | undefined;
   p_alert: string | undefined;
@@ -77,21 +81,24 @@ export class RegisterPage implements OnInit {
   user_all_length!: number;
   myGroup!: FormGroup;
 
-  constructor(private authService: AuthService,public formBuilder: FormBuilder, private userAllService: UserAllService, private tutorialService: ServicesTestService, public loadingController: LoadingController, private ionLoaderService: IonLoaderService, private alertController: AlertController, private route: Router) {
+  constructor(private router: Router,private authService: AuthService,public formBuilder: FormBuilder, private userAllService: UserAllService, private tutorialService: ServicesTestService, public loadingController: LoadingController, private ionLoaderService: IonLoaderService, private alertController: AlertController, private route: Router) {
     this.retrieveUserAlls()
     
   }
   
-
+  public noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length? null : { 'whitespace': true };       
+}
 
   onSubmit(): void {
-    const { username, email, password } = this.form;
+    const { username, email, password, name} = this.form;
 
-    this.authService.register(username, email, password).subscribe({
+    this.authService.register(username, email, password,name).subscribe({
       next: data => {
         console.log(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
+        this.reloadPage()
       },
       error: err => {
         this.errorMessage = err.error.message;
@@ -99,15 +106,18 @@ export class RegisterPage implements OnInit {
       }
     });
   }
-
+  reloadPage(): void {
+    // window.location.reload();
+    this.router.navigate(['/login']); 
+  }
   ngOnInit() {
     
 
     this.myGroup = new FormGroup({
-      firstName: new FormControl(),
-      username: new FormControl(),
-      email: new FormControl(),
-      password: new FormControl()
+      name: new FormControl([' ', [Validators.required, Validators.minLength(3)]]),
+      username: new FormControl([' ', [Validators.required, Validators.minLength(8)]]),
+      email: new FormControl([' ', [Validators.required, Validators.minLength(2)]]),
+      password: new FormControl([' ', [Validators.required, Validators.minLength(6)]])
   });
   
   }

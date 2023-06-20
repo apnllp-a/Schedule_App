@@ -5,7 +5,7 @@ module.exports = mongoose => {
       password: String,
       firstname: String,
       lastname: String,
-      email:{type:String,unique:true},
+      email: { type: String, unique: true },
       departmentDetail: {
         role: String,
         salary: Number,
@@ -15,7 +15,7 @@ module.exports = mongoose => {
         role: String,
         active: Boolean
       },
-      position: {type:String,default:'member'},
+      position: { type: String, default: 'member' },
       published: Boolean
     },
     { timestamps: true }

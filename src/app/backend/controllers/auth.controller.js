@@ -11,6 +11,7 @@ exports.signup = (req, res) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
+    name:req.body.name,
     password: bcrypt.hashSync(req.body.password, 8),
   });
 
@@ -75,7 +76,7 @@ exports.signin = (req, res) => {
       }
 
       if (!user) {
-        return res.status(404).send({ message: "User Not found." });
+        return res.status(404).send({ message: "Username" });
       }
 
       var passwordIsValid = bcrypt.compareSync(
@@ -84,7 +85,7 @@ exports.signin = (req, res) => {
       );
 
       if (!passwordIsValid) {
-        return res.status(401).send({ message: "Invalid Password!" });
+        return res.status(401).send({ message: "Password!" });
       }
 
       var token = jwt.sign({ id: user.id }, config.secret, {
@@ -92,6 +93,7 @@ exports.signin = (req, res) => {
       });
 
       var authorities = [];
+      // var notification = [];
 
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
@@ -103,7 +105,11 @@ exports.signin = (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        name:user.name,
         roles: authorities,
+         password:user.password
+        // notification:notification
+        
       });
     });
 };

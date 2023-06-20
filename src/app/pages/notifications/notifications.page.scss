@@ -1,0 +1,113 @@
+ion-content {
+    --background: #fff;
+}
+ion-toolbar{
+    // --background: rgb(118,159,205)
+    --background: rgb(118, 159, 205);
+    // --background: linear-gradient(153deg, rgba(118, 159, 205, 1) 0%, rgba(215, 232, 250, 1) 96%, rgba(247, 251, 252, 1) 100%);;
+    border-radius: 0 0 15% 15%;
+    
+}
+
+ion-header {
+     z-index:0; 
+}
+
+ion-card.header-card{
+    background: transparent;
+    box-shadow: none;
+    ion-card-title{
+        font-size: 24px;
+    }
+    ion-card-title , ion-card-subtitle {
+        --color: #fff;
+      }
+      ion-card-subtitle {
+        border-top: 1px solid #fff;
+        padding-top: 7px;
+      }
+    
+}
+ion-card.report-card{
+    box-shadow: none;
+    ion-card-title , ion-card-subtitle {
+        --color: #769fcd;
+      }
+
+    .textarea-style{
+        border: #769FCD 1px solid;
+        border-radius: 4px;
+        min-height: 220px;
+    }
+}
+ion-card.name-confirm{
+    box-shadow: none;
+    ion-card-title , ion-card-subtitle {
+        --color: #d7e3f1;
+      }
+      ion-input{
+        background: #d7e8fa;
+      }
+}
+
+.title-name {
+    display: flex;
+    height: 90px;
+    justify-content: space-between;
+
+    p {
+        display: flex;
+        align-items: end;
+    }
+}
+
+.send-to{
+    display: flex;
+    align-items: center;
+}
+
+
+.selection {
+    ion-list {
+        margin: 0 auto;
+    }
+
+    h6 {
+        color: #769FCD;
+    }
+}
+
+ion-item::part(native) {
+    border: none;
+}
+
+ 
+    
+    .approver {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        .emp,
+        .hr,
+        .manage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            ion-item {
+                text-align: center;
+            }
+        }
+    }
+.btn-g{
+    ion-button.save {
+        --background: #769FCD;
+        --background-hover: #769FCD;
+        --background-activated: #769FCD;
+        --background-focused: #769FCD;
+        --color: #fff;
+        --ripple-color: #769fcdab;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+      }
+}
