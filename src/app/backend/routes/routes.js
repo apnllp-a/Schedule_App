@@ -196,6 +196,9 @@ module.exports = app => {
   
       //Retrieve a single Notification with id
       routerNotification.get("/:id", notifiCations.findOne);
+
+      //Retrieve a single Notification with id
+      routerNotification.get("/mess/:id", notifiCations.findOneByID);
   
       //Update a Notification with id
       routerNotification.put("/:id", notifiCations.update);

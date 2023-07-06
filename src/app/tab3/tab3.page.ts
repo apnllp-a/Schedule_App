@@ -5,6 +5,7 @@ import { NotificationService } from "src/app/services/notifications/notification
 import { StorageService } from '../_services/storage.service';
 import { EventBusService } from '../_shared/event-bus.service';
 import { switchMap } from 'rxjs';
+import { ActionSheetController } from '@ionic/angular';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -16,7 +17,11 @@ export class Tab3Page implements OnInit {
   currentUser: any;
   UserID?: String;
 
-  itemCheck!:Number ;
+  itemCheck!:any ;
+  disCheckitem!:boolean;
+
+  currentUsertest = { id: 'exampleId' };
+  items = ['Item 1', 'Item 2', 'Item 3'];
 
   notifiCations: notifiCations = {
     type_doc: '',
@@ -49,9 +54,7 @@ export class Tab3Page implements OnInit {
   };
 
 
-  constructor(private router: Router,private notification:NotificationService, private storageService: StorageService, private eventBusService: EventBusService) {
-  
-  
+  constructor(private actionSheetController: ActionSheetController,private router: Router,private notification:NotificationService, private storageService: StorageService, private eventBusService: EventBusService) {
   }
 
   ngOnInit(): void {
@@ -59,7 +62,6 @@ export class Tab3Page implements OnInit {
     // console.log(this.currentUser)
     this.retrieveNotifications();
     // console.log(this.currentUser.id)
-    // console.log(this.UserID)
   
   }
 
@@ -106,8 +108,14 @@ export class Tab3Page implements OnInit {
           }
           this.notifi_ = data;
           this.itemCheck = data.length;
+
+          if (this.itemCheck > 0 ) {
+            if (this.currentUser.id != this.UserID) {
+              this.disCheckitem = false;
+            }
+          }
           console.log(this.notifi_)
-    // console.log(this.itemCheck)
+          console.log(this.itemCheck)
         },
         error: (e) => console.error(e)
       });
@@ -127,9 +135,6 @@ export class Tab3Page implements OnInit {
 
 
   ck_nt:boolean = false;
-
-
-
   result!: string;
   public actionSheetButtons = [
     {
@@ -154,7 +159,42 @@ export class Tab3Page implements OnInit {
     },
   ];
 
+  async presentActionSheet() {
+    const buttons = this.generateActionSheetButtons();
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Select an item',
+      cssClass: 'custom-action-sheet',
+      
+      buttons: buttons,
+    });
 
+    await actionSheet.present();
+  }
+
+  generateActionSheetButtons() {
+    const buttons = [];
+
+    for (const item of this.items) {
+      buttons.push({
+        text: item,
+        handler: () => {
+          this.itemClicked(item);
+        },
+      });
+    }
+
+    buttons.push({
+      text: 'Cancel',
+      role: 'cancel',
+    });
+
+    return buttons;
+  }
+
+  itemClicked(item: string) {
+    console.log('Item clicked:', item);
+    // Perform actions for the selected item
+  }
 
   setResult(ev :any) {
     this.result = JSON.stringify(ev.detail, null, 2);

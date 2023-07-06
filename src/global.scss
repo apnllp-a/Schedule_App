@@ -42,3 +42,29 @@ h1,h2,h3,h4,h5,h6 {
     //font-family: 'Open Sans', sans-serif;
     font-family: 'Prompt', sans-serif;
 }
+
+// Custom styles for Action Sheet
+.custom-action-sheet {
+    
+    .action-sheet-wrapper {
+      // Modify the background color
+      background-color: #f2f2f2;
+  
+      .action-sheet-header {
+        background-color: #769FCD;
+        // Customize the header text color
+        color: #ff0000;
+        font-weight: bold;
+      }
+  
+      .action-sheet-button {
+        background-color: #769FCD;
+        // Customize the button text color
+        color: #000000;
+      }
+      .action-sheet-title{
+        background-color: #769FCD;
+      }
+    }
+  }
+

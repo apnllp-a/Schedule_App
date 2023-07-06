@@ -5,8 +5,8 @@
 
         <ion-card class="header-card">
           <ion-card-header>
-            <ion-card-title>Document</ion-card-title>
-            <ion-card-subtitle style="text-align: right;">{{todayNumber | date}}</ion-card-subtitle>
+            <ion-card-title>รายละเอียดเอกสาร</ion-card-title>
+            <ion-card-subtitle style="text-align: right;">{{getBynotifiCations.createdAt | date }}</ion-card-subtitle>
           </ion-card-header>
 
         </ion-card>
@@ -21,78 +21,64 @@
 
     <ion-card class="report-card">
       <ion-card-header>
-        <ion-card-title>เลือกประเภทเอกสาร</ion-card-title>
+        <ion-card-title>รายงาน {{getBynotifiCations.type_doc}}</ion-card-title>
       </ion-card-header>
+      
 
       <ion-card-content>
-        <ion-list>
-          <ion-item lines="none">
-            <ion-select (ionChange)="handleChange($event)" aria-label="Fruit" interface="popover"
-              placeholder="เลือกประเภทเอกสาร">
-              <ion-select-option value="เอกสารการลา">เอกสารการลา</ion-select-option>
-              <ion-select-option value="เอกสารรายงาน">เอกสารรายงาน</ion-select-option>
-              <ion-select-option value="เอกสารการแลกเปลี่ยนเวร">เอกสารการแลกเปลี่ยนเวร</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-list>
-
-        <div class="title-document">
-          <p><span style="font-weight: 600;color: #769fcd;">รายงาน</span> {{currentFood}}</p>
-        </div>
-
-
         <div class="send-to">
           <p style="font-weight: 600;color: #769fcd;">เรียน</p>
           <ion-item lines="none">
-            <ion-input class="custom" placeholder="กรุณาพิมพ์ ชื่อ"></ion-input>
+            <p>{{getBynotifiCations.user_send}}</p>
           </ion-item>
         </div>
 
-        <ion-item lines="none">
-          <ion-textarea class="textarea-style" style="text-indent: 25px;
-          padding: 10px;" placeholder="พิมพ์ข้อความ" [autoGrow]="true" value="">
-          </ion-textarea>
+        <ion-item  lines="none">
+          <p style="text-indent: 20px;">{{getBynotifiCations.desc}}</p>
         </ion-item>
 
       </ion-card-content>
     </ion-card>
 
-    <!-- <ion-card class="name-confirm">
+    <ion-card class="name-confirm">
       <ion-card-content>
         <div class="approver">
           <div class="emp">
+            <p>ผู้ส่ง</p>
             <ion-item  lines="none">
-              <ion-input   labelPlacement="floating" ></ion-input>
+              <p>AAAAAAA asasas</p>
             </ion-item>
-            <p>ชื่อพนักงาน</p>
-            <p>{{todayNumber| date}}</p>
+            
+            <p>{{getBynotifiCations.createdAt}}</p>
           </div>
+          <br>
           <div class="hr">
+            <p>ผู้อนุมัติ</p>
             <ion-item lines="none">
-              <ion-input   labelPlacement="floating" ></ion-input>
+              <p>asasasqwqwqw</p>
             </ion-item>
-            <p>ฝ่ายบุคล</p>
-            <p>{{todayNumber| date}}</p>
+            
+            <p>{{getBynotifiCations.updatedAt}}</p>
           </div>
-          <div class="manage">
+          <!-- <div class="manage">
             <ion-item lines="none">
               <ion-input  labelPlacement="floating" ></ion-input>
             </ion-item>
             <p>ฝ่ายบริหาร</p>
             <p>{{todayNumber| date}}</p>
-          </div>
+          </div> -->
         </div>
 
       </ion-card-content>
-    </ion-card> -->
+    </ion-card>
 
-    <ion-card style="  box-shadow: none;">
+    <!-- <ion-card style="  box-shadow: none;">
       <ion-card-content>
         <div class="btn-g">
           <ion-button size="full" class="save">บันทึก</ion-button>
         </div>
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
 
   </ion-content>
 </div>

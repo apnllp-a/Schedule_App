@@ -54,6 +54,22 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single notification with an id
+exports.findOneByID = (req, res) => {
+    const id = req.params.id;
+
+    notifiCations.findById(id).then(data => {
+        if (!data)
+            res.status(404).send({ message: "Not found notification with id " + id });
+        else res.send(data);
+    })
+        .catch(err => {
+            res.status(500).send({ message: "Error retrieving WTF notification with id " + id });
+        });
+};
+
+
+
+// Find a single notification with an id
 exports.findOne = (req, res) => {
     const id = req.params.user_send_id;
 

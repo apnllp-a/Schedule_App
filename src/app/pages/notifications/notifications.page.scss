@@ -5,7 +5,7 @@ ion-toolbar{
     // --background: rgb(118,159,205)
     --background: rgb(118, 159, 205);
     // --background: linear-gradient(153deg, rgba(118, 159, 205, 1) 0%, rgba(215, 232, 250, 1) 96%, rgba(247, 251, 252, 1) 100%);;
-    border-radius: 0 0 15% 15%;
+    border-radius: 0 0 5% 5%;
     
 }
 
@@ -87,6 +87,7 @@ ion-item::part(native) {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        flex-direction: column;
         gap: 12px;
         .emp,
         .hr,

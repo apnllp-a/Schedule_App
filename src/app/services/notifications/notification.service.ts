@@ -23,6 +23,9 @@ export class NotificationService {
   get(id: any): Observable<notifiCations> {
     return this.http.get(`${baseUrl}/${id}`);
   }
+  getByID(id: any): Observable<notifiCations> {
+    return this.http.get(`${baseUrl}/mess/${id}`);
+  }
 
   create(data: any): Observable<any> {
     return this.http.post(baseUrl, data);

@@ -13,5 +13,6 @@ export class notifiCations {
   user_send_name?: String;
   user_send_id?: String;
   createdAt?: Date;
+  updatedAt?:Date;
   published?: boolean;
 }

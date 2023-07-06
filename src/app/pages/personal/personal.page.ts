@@ -8,6 +8,7 @@ import { EventData } from 'src/app/_shared/event.class';
 import { dataUsers } from 'src/app/models/data-users/data_users.model';
 import { HttpHeaders } from '@angular/common/http';
 import * as bcrypt from 'bcryptjs';
+import { tap } from 'rxjs';
 // Create an instance of HttpHeaders and set the desired headers
 
 
@@ -30,8 +31,9 @@ export class PersonalPage implements OnInit {
   testid?: string;
   UserID?: String;
   passFormUser = '';
+  ck_user_id: any;
 
-  err_checkPass:boolean | undefined;
+  err_checkPass: boolean | undefined;
 
   data_users: dataUsers = {
     name: '',
@@ -61,9 +63,9 @@ export class PersonalPage implements OnInit {
   constructor(private Services: ServicesAllService, private router: Router, private alertController: AlertController, private storageService: StorageService, private eventBusService: EventBusService) {
     // Example usage
 
-    console.log(this.UserID)
-    
-    
+
+
+
   }
 
 
@@ -72,35 +74,61 @@ export class PersonalPage implements OnInit {
     console.log(this.currentUser)
     this.retrieveUser()
   }
-  
 
+
+
+  // retrieveUser(): void {
+  //   this.Services.getAll()
+  //     .subscribe({
+  //       next: (data) => {
+  //         this.user_all = data;
+  //         console.log(this.user_all)
+  //         this.Services.get(this.currentUser.id).subscribe({
+  //           next: (data2) => {
+  //             this.currentDataUser = data2;
+  //             this.ck_user_id == this.currentDataUser.user_id;
+  //             console.log("ck_user_id:", this.ck_user_id);
+  //           },
+  //           error: (e) => console.error(e)
+  //         });
+  //       },
+  //       error: (e) => console.error(e)
+  //     });
+  // }
 
   retrieveUser(): void {
-    this.Services.getAll()
-      .subscribe({
-        next: (data) => {
-          this.user_all = data;
-          console.log(this.user_all)
-          for (let i = 0; i < data.length; i++) {
-            const element = data[i];
-            if (element.user_id == this.currentUser.id) {
-              this.UserID = element.user_id;
-              this.Services.get(this.UserID).subscribe({
-                next: (data2) => {
-                  this.currentDataUser = data2;
-                  // console.log(this.currentDataUser)
-                }
-              })
-
-              // console.log(this.UserID)
-            }
+    this.Services.getAll().subscribe({
+      next: (data) => {
+        this.user_all = data;
+        for (let index = 0; index < this.user_all.length; index++) {
+          const element = this.user_all[index];
+          console.log(element);
+          if (element.user_id == this.currentUser.id) {
+            console.log(element)
+            this.currentDataUser = element;
           }
-        },
-        error: (e) => console.error(e)
-      });
+        }
+        this.Services.get(this.currentUser.id).pipe(
+          tap((data2) => {
+            // this.currentDataUser = data2;
+            //  console.log( this.currentDataUser);
+            this.ck_user_id = this.currentDataUser.user_id;
+          })
+        ).subscribe({
+          next: (data2) => {
+            this.ck_user_id = data2.user_id;
+            // Further processing that depends on this.ck_user_id
+
+            // Rest of your code
+          },
+          error: (e) => console.error(e)
+        });
+      },
+      error: (e) => console.error(e)
+    });
   }
 
-  checkPass(id:string){
+  checkPass(id: string) {
     const userEnteredPassword = id; // Replace with the user's entered password
     const storedHashedPassword = this.currentUser.password; // Replace with the stored hashed password
     bcrypt.compare(userEnteredPassword, storedHashedPassword, (err, result) => {
@@ -120,7 +148,7 @@ export class PersonalPage implements OnInit {
     });
   }
 
-  saveTutorial(): void {
+  saveTutorial(e: any): void {
     const data = {
       name: this.data_users.name,
       department: this.data_users.department,
@@ -132,28 +160,133 @@ export class PersonalPage implements OnInit {
       user_id: this.currentUser.id
     };
 
-    if (data.user_id == this.UserID) {
+    if (data.user_id == e) {
       // console.log("Chang to Update")
-      if(this.err_checkPass == true ){
+      if (this.err_checkPass == true) {
         this.Services.update(this.UserID, data)
-        .subscribe({
-          next: (res) => {
-            console.log(res);
-            this.reloadPage();
-          },
-          error: (e) => console.error(e)
-        });
+          .subscribe({
+            next: (res) => {
+              console.log(res);
+              this.reloadPage();
+            },
+            error: (e) => console.error(e)
+          });
       }
-      if (this.err_checkPass == false ) {
+      if (this.err_checkPass == false) {
         console.log("Check One more !!")
         this.presentAlertPass()
-        
-      }
-    } if (this.err_checkPass == null ) {
-      this.presentAlertPass()
-    }
 
+      }
+      if (this.err_checkPass == null) {
+        this.presentAlertPass()
+      }
+    } else {
+      this.Services.create(data).subscribe({
+        next: (res) => {
+          console.log(res)
+          this.reloadPage();
+        },
+        error: (e) => console.log(e)
+      });
+    }
   }
+
+  // saveTutorial(e:any): void {
+  //   const data = {
+  //     user_id: this.currentUser.id,
+  //   };
+
+  //   if (data.user_id == e) {
+  //     if (this.err_checkPass == true) {
+  //       if ( this.data_users.name) {
+  //         Object.assign(data, { name: this.data_users.name });
+  //         this.updateField('name', data);
+  //       }
+  //       if ( this.data_users.department) {
+  //         Object.assign(data, { department: this.data_users.department });
+  //         this.updateField('department', data);
+  //       }
+  //       if ( this.data_users.position) {
+  //         Object.assign(data, { position: this.data_users.position });
+  //         this.updateField('position', data);
+  //       }
+  //       if ( this.data_users.address) {
+  //         Object.assign(data, { address: this.data_users.address });
+  //         this.updateField('address', data);
+  //       }
+  //       if ( this.data_users.phone) {
+  //         Object.assign(data, { phone: this.data_users.phone });
+  //         this.updateField('phone', data);
+  //       }
+  //       if ( this.data_users.phone_iffice) {
+  //         Object.assign(data, { phone_iffice: this.data_users.phone_iffice });
+  //         this.updateField('phone_iffice', data);
+  //       }
+  //       if ( this.data_users.age) {
+  //         Object.assign(data, { age: this.data_users.age });
+  //         this.updateField('age', data);
+  //       }
+  //     } else if (this.err_checkPass == false) {
+  //       console.log("Check One more !!");
+  //       this.presentAlertPass();
+  //     } else {
+  //       console.log("No password check performed");
+  //       this.presentAlertPass();
+  //     }
+  //   } else {
+  //     console.log("Invalid user ID");
+
+  //     const datanew = {
+  //       name: this.data_users.name,
+  //       department: this.data_users.department,
+  //       position: this.data_users.position,
+  //       address: this.data_users.address,
+  //       phone: this.data_users.phone,
+  //       phone_iffice: this.data_users.phone_iffice,
+  //       age: this.data_users.age,
+  //       user_id: this.currentUser.id
+  //     };
+  //     this.Services.create(datanew).subscribe({
+  //       next: (res) => {
+  //         console.log(res)
+  //         this.reloadPage();
+  //       },
+  //       error: (e) => console.log(e)
+  //     });
+  //   }
+  // }
+
+
+
+  // updateField(field: string, data: any): void {
+  //   this.Services.get(this.currentUser.id).subscribe({
+  //     next: (res) => {
+  //       const updatedData = { ...res, ...data }; // Merge existing data with the new field
+  //       this.Services.update(this.currentUser.id, updatedData).subscribe({
+  //         next: (res) => {
+  //           console.log(`Updated ${field}:`, res);
+  //           this.reloadPage();
+  //         },
+  //         error: (e) => console.error(e)
+  //       });
+  //     },
+  //     error: (e) => console.error(e)
+  //   });
+  // }
+
+  // updateField(field: string, data: any): void {
+  //   this.Services.update(this.currentUser.id, data)
+  //     .subscribe({
+  //       next: (res) => {
+  //         console.log(`Updated ${field}:`, res);
+  //         this.reloadPage();
+  //       },
+  //       error: (e) => console.error(e)
+  //     });
+  // }
+
+
+
   reloadPage(): void {
     window.location.reload();
   }

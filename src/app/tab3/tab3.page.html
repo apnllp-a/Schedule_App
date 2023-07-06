@@ -11,23 +11,25 @@
 
     <!-- มีข้อมูล -->
     <ng-container *ngFor="let a of notifi_; let index = index" >
-      <ion-item *ngIf="a.user_send_id == currentUser.id" class="item-noti" style="padding:5px 20px;"  button detail
+    <ng-container *ngIf="a.user_send_id == currentUser.id" >
+      <ion-item routerLink="notifications/mess/{{a.id}}"  class="item-noti" style="padding:5px 20px;"  button detail
       lines="full">
         <ion-label style="line-height: 35px;">{{a.type_doc}}<br>
           <p style="text-indent: 15px;">{{a.desc}}</p>
         </ion-label>
-        <ion-icon name="ellipsis-vertical" id="open-action-sheet"></ion-icon>
+        <ion-icon name="ellipsis-vertical" (click)="presentActionSheet()"></ion-icon>
     </ion-item>
+    </ng-container>
  <!-- ไม่มีข้อมูล -->
  
    
     </ng-container> 
     <br><br>
-    <ion-action-sheet trigger="open-action-sheet" header="Example header" subHeader="Example subheader"
-      [buttons]="actionSheetButtons" (didDismiss)="setResult($event)"></ion-action-sheet>
-
+    <!-- <ion-action-sheet trigger="{{currentUser.id}}" header="Example header" subHeader="Example subheader"
+      [buttons]="actionSheetButtons" (didDismiss)="setResult($event)"></ion-action-sheet> -->
+  
     <!-- ไม่มีข้อมูล -->
-    <div class="non_notification" *ngIf="itemCheck == 0 ">
+    <div class="non_notification" *ngIf="itemCheck == 0 || disCheckitem == false">
 
       <img alt="Notifications" src="../../assets/images/no-notification.svg" />
       <ion-card-header>
