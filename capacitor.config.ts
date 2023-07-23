@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'schedule-app',
+  appId: 'com.schedule.schApp',
+  appName: 'schedule app',
   webDir: 'www',
   bundledWebRuntime: false
 };
