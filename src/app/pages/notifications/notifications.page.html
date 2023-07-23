@@ -1,84 +1,88 @@
-<div class="ion-page" id="main-content-doc">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>
-
-        <ion-card class="header-card">
-          <ion-card-header>
-            <ion-card-title>รายละเอียดเอกสาร</ion-card-title>
-            <ion-card-subtitle style="text-align: right;">{{getBynotifiCations.createdAt | date }}</ion-card-subtitle>
-          </ion-card-header>
-
-        </ion-card>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content style="--padding-bottom:75px;" class="ion-padding">
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-      <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-
-
-    <ion-card class="report-card">
-      <ion-card-header>
-        <ion-card-title>รายงาน {{getBynotifiCations.type_doc}}</ion-card-title>
-      </ion-card-header>
-      
-
-      <ion-card-content>
-        <div class="send-to">
-          <p style="font-weight: 600;color: #769fcd;">เรียน</p>
-          <ion-item lines="none">
-            <p>{{getBynotifiCations.user_send}}</p>
+<div class="print-wrapper" id="print-wrapper">
+  <div class="ion-page" id="main-content-doc">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+  
+          <ion-card class="header-card">
+            <ion-card-header>
+              <ion-card-title>รายละเอียดเอกสาร</ion-card-title>
+              <ion-card-subtitle style="text-align: right;">{{getBynotifiCations.createdAt | date }}</ion-card-subtitle>
+            </ion-card-header>
+  
+          </ion-card>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content  style="--padding-bottom:75px;" class="ion-padding">
+      <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+  
+  
+      <ion-card class="report-card">
+        <ion-card-header>
+          <ion-card-title>รายงาน {{getBynotifiCations.type_doc}}</ion-card-title>
+        </ion-card-header>
+        
+  
+        <ion-card-content>
+          <div class="send-to">
+            <p style="font-weight: 600;color: #769fcd;">เรียน</p>
+            <ion-item lines="none">
+              <p>{{getBynotifiCations.user_send}}</p>
+            </ion-item>
+          </div>
+  
+          <ion-item  lines="none">
+            <p style="text-indent: 20px;">{{getBynotifiCations.desc}}</p>
           </ion-item>
-        </div>
-
-        <ion-item  lines="none">
-          <p style="text-indent: 20px;">{{getBynotifiCations.desc}}</p>
-        </ion-item>
-
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card class="name-confirm">
-      <ion-card-content>
-        <div class="approver">
-          <div class="emp">
-            <p>ผู้ส่ง</p>
-            <ion-item  lines="none">
-              <p>AAAAAAA asasas</p>
-            </ion-item>
-            
-            <p>{{getBynotifiCations.createdAt}}</p>
+  
+        </ion-card-content>
+      </ion-card>
+  
+      <ion-card class="name-confirm">
+        <ion-card-content>
+          <div class="approver">
+            <div class="emp">
+              <p>ผู้ส่ง</p>
+              <ion-item  lines="none">
+                <p>AAAAAAA asasas</p>
+              </ion-item>
+              
+              <p>{{getBynotifiCations.createdAt}}</p>
+            </div>
+            <br>
+            <div class="hr">
+              <p>ผู้อนุมัติ</p>
+              <ion-item lines="none">
+                <p>asasasqwqwqw</p>
+              </ion-item>
+              
+              <p>{{getBynotifiCations.updatedAt}}</p>
+            </div>
+            <!-- <div class="manage">
+              <ion-item lines="none">
+                <ion-input  labelPlacement="floating" ></ion-input>
+              </ion-item>
+              <p>ฝ่ายบริหาร</p>
+              <p>{{todayNumber| date}}</p>
+            </div> -->
           </div>
-          <br>
-          <div class="hr">
-            <p>ผู้อนุมัติ</p>
-            <ion-item lines="none">
-              <p>asasasqwqwqw</p>
-            </ion-item>
-            
-            <p>{{getBynotifiCations.updatedAt}}</p>
+          <ion-button color="danger" fill="outline" (click)="createPdf()">
+            View PDF
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+  
+      <!-- <ion-card style="  box-shadow: none;">
+        <ion-card-content>
+          <div class="btn-g">
+            <ion-button size="full" class="save">บันทึก</ion-button>
           </div>
-          <!-- <div class="manage">
-            <ion-item lines="none">
-              <ion-input  labelPlacement="floating" ></ion-input>
-            </ion-item>
-            <p>ฝ่ายบริหาร</p>
-            <p>{{todayNumber| date}}</p>
-          </div> -->
-        </div>
-
-      </ion-card-content>
-    </ion-card>
-
-    <!-- <ion-card style="  box-shadow: none;">
-      <ion-card-content>
-        <div class="btn-g">
-          <ion-button size="full" class="save">บันทึก</ion-button>
-        </div>
-      </ion-card-content>
-    </ion-card> -->
-
-  </ion-content>
+        </ion-card-content>
+      </ion-card> -->
+  
+    </ion-content>
+  </div>
 </div>

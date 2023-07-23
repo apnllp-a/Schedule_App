@@ -25,6 +25,9 @@ export class Tab1Page implements OnInit {
   user_all!: UserAll[];
   notifi_!: notifiCations[];
   currentUser: any;
+  idFormselcet:any;
+   fName:any;
+   lName:any;
 
   getBynotifiCations: notifiCations = {
     type_doc: '',
@@ -69,6 +72,18 @@ export class Tab1Page implements OnInit {
       });
   }
 
+  retrieveUserByID(id:any): void {
+    this.userAllService.get(id)
+      .subscribe({
+        next: (data) => {
+          console.log(data)
+          this.fName = data.firstname;
+          this.lName = data.lastname;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
   currentTutorial: UserAll = {};
   currentIndex = -1;
   firstname = '';
@@ -100,6 +115,8 @@ export class Tab1Page implements OnInit {
 
   confirm() {
     this.modal.dismiss(this.name, 'confirm');
+    this.retrieveUserByID(this.name);
+
   }
 
   onWillDismiss(event: Event) {
@@ -107,15 +124,18 @@ export class Tab1Page implements OnInit {
     if (ev.detail.role === 'confirm') {
       this.message = `Hello, ${ev.detail.data}!`;
       console.log(this.name)
+      this.idFormselcet = this.name;
     }
   }
 
-
+  reloadPage(): void {
+    window.location.reload();
+  }
 
   save_noti(): void {
     const data = {
       type_doc: this.getBynotifiCations.type_doc,
-      title: this.getBynotifiCations.title,
+      title: this.getBynotifiCations.type_doc,
       desc: this.getBynotifiCations.desc,
       user_send: this.currentUser.username,
       send_id: this.currentUser.id,

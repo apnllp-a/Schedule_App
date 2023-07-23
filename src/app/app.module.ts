@@ -9,13 +9,22 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './_helpers/http.interceptor';
 import { FormsModule } from '@angular/forms';
+// Add modules
+import { File } from '@ionic-native/file/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,FormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, httpInterceptorProviders],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, httpInterceptorProviders
+    , File,
+    FileOpener,
+  {
+    provide: RouteReuseStrategy,
+    useClass: IonicRouteStrategy,
+  },],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

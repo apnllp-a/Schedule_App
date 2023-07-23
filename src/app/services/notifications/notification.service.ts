@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { notifiCations } from '../../models/notifications/notifications.model';
 const baseUrl = 'http://localhost:8080/api/notification';
+
 // const headers = new HttpHeaders({
 //   'Content-Type': 'application/json',
 //   // 'Authorization': 'Bearer <your_token>'
