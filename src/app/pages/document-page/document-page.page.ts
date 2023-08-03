@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { ActionSheetController, AlertController, IonModal } from '@ionic/angular';
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserAll } from 'src/app/models/user/user-all.model';
 import { UserAllService } from 'src/app/services/user/user-all.service';
@@ -28,6 +28,7 @@ export class Tab1Page implements OnInit {
   idFormselcet:any;
    fName:any;
    lName:any;
+   notificationGet!: notifiCations[];
 
   getBynotifiCations: notifiCations = {
     type_doc: '',
@@ -51,12 +52,14 @@ export class Tab1Page implements OnInit {
     setTimeout(() => {
       // Any calls to load data go here
       event.target.complete();
-    }, 2000);
+      window.location.reload();
+    }, 1000);
   };
-  constructor(private storageService: StorageService,private notification: NotificationService, private authService: AuthService, public formBuilder: FormBuilder, private router: Router, private userAllService: UserAllService) { }
+  constructor(private actionSheetCtrl: ActionSheetController,private alertController: AlertController, private storageService: StorageService,private notification: NotificationService, private authService: AuthService, public formBuilder: FormBuilder, private router: Router, private userAllService: UserAllService) { }
   ngOnInit() {
     this.retrieveUserAlls();
     this.currentUser = this.storageService.getUser();
+    this.retrieveNotifications();
     console.log(this.currentUser)
   }
   retrieveUserAlls(): void {
@@ -132,6 +135,17 @@ export class Tab1Page implements OnInit {
     window.location.reload();
   }
 
+
+
+  alert_text_save:any;
+
+  refresher_input(){
+    this.getBynotifiCations.type_doc = '';
+    this.getBynotifiCations.desc = '';
+    this.name = '';
+  }
+
+
   save_noti(): void {
     const data = {
       type_doc: this.getBynotifiCations.type_doc,
@@ -147,6 +161,29 @@ export class Tab1Page implements OnInit {
       user_send_id: this.name,
 
     };
+    if (this.getBynotifiCations.type_doc == '') {
+      console.log('เลือกประเภทก่อน')
+      this.alert_text_save = 'ยังไม่ได้เลือกประเภทเอกสาร'
+      
+    }
+    if (this.getBynotifiCations.desc == '' ) {
+      console.log('เพิ่มรายก่อน')
+      this.alert_text_save = 'ยังไม่ได้เพิ่มเนื้อหาของเอกสาร'
+    }
+    if (this.name == '' || this.name == null) {
+      console.log('เพิ่มคนก่อน')
+      this.alert_text_save = 'ยังไม่ได้กำหนดผู้รับ'
+     
+    }
+
+    if (this.name == '' || this.name == null && this.getBynotifiCations.desc == '' && this.getBynotifiCations.type_doc == '') {
+      console.log('เพิ่มข้อมูล')
+      this.alert_text_save = 'กรุณากำหนดรายละเอียดเอกสาร'
+      
+    }
+    this.presentAlert()
+
+    
     this.notification.create(data)
       .subscribe({
         next: (res) => {
@@ -166,8 +203,109 @@ export class Tab1Page implements OnInit {
 
   }
 
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'ส่งไม่สำเร็จ',
+      // subHeader: 'Important message',
+      message:  this.alert_text_save,
+      buttons: ['OK'],
+    });
+
+    await alert.present();
+  }
+
+  retrieveNotifications(): void {
+    this.notification.getAll()
+      .subscribe({
+        next: (data) => {
+              // this.notification.get(this.id_noti).subscribe({
+              //   next: (data2) => {
+              data;
+              this.notificationGet = data;
+              //     console.log(this.getBynotifiCations)
+              //   }
+              // })
+          // this.notifi_ = data;
+          // this.itemCheck = data.length;
+
+         
+          console.log(this.notificationGet)
+          // console.log(this.itemCheck)
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
 
 
+
+  async presentActionSheet(id:any) {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Actions',
+      buttons: [
+        {
+          text: 'Delete',
+          role: 'destructive',
+          data: {
+            action: 'delete',
+          },
+          handler: () => {
+            this.deleteDoc(id)
+            // this.reloadPage();
+          }
+        },
+        {
+          text: 'ดูรายละเอียด',
+        
+          data: {
+            action: 'share',
+          },
+          handler: () => {
+           this.gotoDoc(id)
+            // this.reloadPage();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          data: {
+            action: 'cancel',
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+  }
+
+  deleteDoc(id:any):void{
+    this.notification.delete(id).subscribe({
+      next: (res) =>{
+        console.log(res)
+        // window.location.reload();
+      },
+      error: (e) => console.error(e)
+    });
+
+  }
+
+  gotoDoc(id:any):void{
+    this.notification.get(id).subscribe({
+      next: (res) =>{
+        console.log(res)
+        window.location.href = '';
+        // window.location.reload();
+      },
+      error: (e) => console.error(e)
+    });
+
+  }
 
 }

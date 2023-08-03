@@ -36,9 +36,11 @@
           </ion-item>
         </ion-list>
 
-        <div class="title-document">
-          <p><span style="font-weight: 600;color: #769fcd;">รายงาน</span> {{currentFood}}</p>
-        </div>
+        <!-- <div class="title-document">
+          <p *ngIf="getBynotifiCations.type_doc=='0'"><span style="font-weight: 600;color: #769fcd;">รายงาน</span> เอกสารการลา</p>
+          <p *ngIf="getBynotifiCations.type_doc=='1'"><span style="font-weight: 600;color: #769fcd;">รายงาน</span> เอกสารรายงาน</p>
+          <p *ngIf="getBynotifiCations.type_doc=='2'"><span style="font-weight: 600;color: #769fcd;">รายงาน</span> เอกสารการแลกเปลี่ยนเวร</p>
+        </div> -->
 
 
         <div class="send-to">
@@ -49,8 +51,8 @@
             <ion-label style="font-weight: 600;color: #769fcd;margin-right: 16px;">เรียน</ion-label>
             <p style=" min-width: 150px;">{{fName}} {{lName}}</p>
             <!-- <ion-input [clearInput]="true" [(ngModel)]="firstname" class="custom">{{fName}} {{lName}}</ion-input> -->
-            <ion-button id="open-modal" class="btn btn-outline-secondary" type="button" (click)="searchName()">
-              Search
+            <ion-button id="open-modal" color="medium"   type="button" (click)="searchName()">
+              <ion-icon  name="search-outline"></ion-icon>
             </ion-button>
 
 
@@ -139,31 +141,34 @@
     <ion-card style="  box-shadow: none;">
       <ion-card-content>
         <div class="btn-g">
-          <ion-button (click)="save_noti()" size="full" class="save">บันทึก</ion-button>
+          <ion-button (click)="save_noti()" size="full" class="save">บันทึก</ion-button> <br>
+          <ion-button (click)="refresher_input()" size="full" color="danger"  fill="clear">เคลียร์ข้อมูล</ion-button>
+          <!-- <ion-button (click)="refresher_input()" size="full" class="refresh">เคลียร์ข้อมูล</ion-button> -->
         </div>
 
 
       </ion-card-content>
     </ion-card>
 
-    <ion-list [inset]="true">
-      <ion-item>
-        <ion-label>Pokémon Yellow</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Mega Man X</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>The Legend of Zelda</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Pac-Man</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Super Mario World</ion-label>
-      </ion-item>
-    </ion-list>
+
+    <ion-card style="background-position: 50%;background-image: url('../../../assets/images/Documents-amico.png'); background-size: cover; opacity: .6;">
+      <!-- <ion-card-header>
+        <ion-card-title>Card Title</ion-card-title>
+        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+        Here's a small text description for the card content. Nothing more, nothing less.
+      </ion-card-content> -->
+    
+      <ion-button style="--background:transparent;--color: #000000;--box-shadow: none;height: 120px;font-size:26px;font-weight: 700;" expand="block" (click)="setOpen(true)">ดูเอกสารทั้งหมด</ion-button>
+      <!-- <ion-button fill="clear">Action 2</ion-button> -->
+    </ion-card>
+    <!-- <ion-button expand="block" (click)="setOpen(true)">Open</ion-button> -->
+
   </ion-content>
+
+
   <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
     <ng-template>
       <ion-header>
@@ -181,23 +186,86 @@
         <ion-item>
           <ion-input [(ngModel)]="firstname" class="custom" placeholder="กรุณาพิมพ์ ชื่อ">{{fName}}
             {{lName}}</ion-input>
-          <ion-button id="open-modal" class="btn btn-outline-secondary" type="button" (click)="searchName()">
+          <ion-button id="open-modal" style="--background: #769fcd;" type="button" (click)="searchName()">
             Search
           </ion-button>
         </ion-item>
-        <ion-item>
-          <ion-select [(ngModel)]="name" aria-label="Fruit" interface="popover" placeholder="เลือกรายชื่อ">
-            <ng-container *ngFor="let item of user_all" style="display:flex; flex-direction: column;">
-              <ion-select-option value="{{item.id}}">{{item.firstname}} {{item.lastname}}</ion-select-option>
-              <!-- <p>{{item.firstname}}</p>  -->
+        <br>
+        <ion-item lines="none">
+          <ion-radio-group style="width: 100%;" [(ngModel)]="name">
+            <ng-container *ngFor="let item of user_all">
+              <ng-container *ngIf="item.firstname != '' && item.firstname != null">
 
+                <ion-radio value="{{item.id}}">
+
+                  <ion-item lines="none">
+                    <ion-avatar slot="start">
+                      <img alt="Silhouette of a person's head"
+                        src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                    </ion-avatar>
+                    <ion-label>{{item.firstname}} {{item.lastname}}</ion-label>
+                    <!-- <ion-icon name="close"></ion-icon> -->
+                  </ion-item>
+                </ion-radio>
+
+              </ng-container>
             </ng-container>
-          </ion-select>
+          </ion-radio-group>
         </ion-item>
+
       </ion-content>
     </ng-template>
   </ion-modal>
 
 
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar class="document_sended">
+          <ion-title>เอกสารทั้งหมด</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)"><ion-icon name="close-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" style="--background: #769fcd;">
+        <ng-container *ngFor="let item of notificationGet">
+          <ng-container *ngIf="item.send_id == currentUser.id">
+
+            <ion-card class="bg-ion-card" (click)="presentActionSheet(item.id)">
+              <ion-card-header>
+                <ion-card-title class="card-title" *ngIf="item.type_doc == '0'">เอกสารการลา</ion-card-title>
+                <ion-card-title class="card-title" *ngIf="item.type_doc == '1'">เอกสารรายงาน</ion-card-title>
+                <ion-card-title class="card-title" *ngIf="item.type_doc == '2'">เอกสารการแลกเปลี่ยนเวร</ion-card-title>
+                <ion-card-subtitle>ส่งเมื่อ {{item.createdAt | date}}</ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <div class="detail_doc">
+                  <p style="text-indent: 16px;">{{item.desc}}</p>
+                  <p *ngIf="item.desc == '' || item.desc == null" style="text-indent: 16px;">ไม่ได้กำหนดเนื้อหา</p>
+                  <br><br>
+                  <ng-container *ngFor="let user of user_all">
+
+                    <ng-container *ngIf="user.id == item.user_send_id">
+
+                      <p style="text-align: end;">ผู้รับ : <span style="color: #769fcd;">{{user.firstname}}
+                          {{user.lastname}}</span></p>
+                          
+
+                    </ng-container>
+                  </ng-container>
+
+
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ng-container>
+        </ng-container>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+ 
 
 </div>

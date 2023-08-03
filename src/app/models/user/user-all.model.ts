@@ -9,3 +9,15 @@ export class UserAll {
     createdAt?: Date;
     published?: boolean;
 }
+
+export interface UserAlls {
+    id: any;
+    username: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    tal: string;
+    createdAt: Date;
+    published: boolean;
+}

@@ -4,14 +4,14 @@ const cors = require("cors");
 const app = express();
 const cookieSession = require("cookie-session");
 
-// const allowedOrigins = [
-//   // 'capacitor://localhost',
-//   // 'ionic://localhost',
-//   // 'http://localhost',
-//   'http://localhost:8080',
-//   // 'http://localhost:8100',
-//   'http://localhost:8081',
-// ];
+const allowedOrigins = [
+  'capacitor://localhost',
+  'ionic://localhost',
+  'http://localhost',
+  'http://localhost:8080',
+  'http://localhost:8100',
+  'http://localhost:8081',
+];
 
 var corsOptions = {
   origin: "http://localhost:8081",

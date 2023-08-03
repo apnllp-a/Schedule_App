@@ -2,12 +2,18 @@ apply plugin: 'com.android.application'
 
 android {
 
+
+  packagingOptions {
+    resources {
+      excludes += ['META-INF/NOTICE', 'META-INF/LICENSE']
+    }
+  }
   namespace 'com.schedule.schApp'
   compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.schedule.schApp"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 22
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -23,7 +29,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-  namespace ''
+  namespace 'com.schedule.schApp'
+
 }
 
 repositories {
