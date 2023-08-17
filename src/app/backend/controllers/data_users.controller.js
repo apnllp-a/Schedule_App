@@ -20,6 +20,7 @@ exports.create = (req, res) => {
         phone:req.body.phone,
         phone_iffice:req.body.phone_iffice,
         date:req.body.date,
+        age:req.body.age,
         published: req.body.published ? req.body.published : false
     });
 

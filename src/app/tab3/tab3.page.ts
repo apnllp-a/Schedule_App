@@ -159,37 +159,37 @@ export class Tab3Page implements OnInit {
     },
   ];
 
-  async presentActionSheet() {
-    const buttons = this.generateActionSheetButtons();
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Select an item',
-      cssClass: 'custom-action-sheet',
+  // async presentActionSheet() {
+  //   const buttons = this.generateActionSheetButtons();
+  //   const actionSheet = await this.actionSheetController.create({
+  //     header: 'Select an item',
+  //     cssClass: 'custom-action-sheet',
       
-      buttons: buttons,
-    });
+  //     buttons: buttons,
+  //   });
 
-    await actionSheet.present();
-  }
+  //   await actionSheet.present();
+  // }
 
-  generateActionSheetButtons() {
-    const buttons = [];
+  // generateActionSheetButtons() {
+  //   const buttons = [];
 
-    for (const item of this.items) {
-      buttons.push({
-        text: item,
-        handler: () => {
-          this.itemClicked(item);
-        },
-      });
-    }
+  //   for (const item of this.items) {
+  //     buttons.push({
+  //       text: item,
+  //       handler: () => {
+  //         this.itemClicked(item);
+  //       },
+  //     });
+  //   }
 
-    buttons.push({
-      text: 'Cancel',
-      role: 'cancel',
-    });
+  //   buttons.push({
+  //     text: 'Cancel',
+  //     role: 'cancel',
+  //   });
 
-    return buttons;
-  }
+  //   return buttons;
+  // }
 
   itemClicked(item: string) {
     console.log('Item clicked:', item);

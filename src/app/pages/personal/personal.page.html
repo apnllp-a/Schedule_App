@@ -13,7 +13,8 @@
                 </div>
                 <div class="name-tag">
                     <div *ngIf="btn == 'true'">
-                        <h2 *ngIf="currentUser.name == ''">{{ currentDataUser.name }}</h2>
+                        <h2 *ngIf="currentUser.name == '' ">{{ currentDataUser.name }}</h2>
+                        <h2 *ngIf="currentDataUser.name == null">{{ currentUser.name }}</h2>
                         <h2 *ngIf="currentDataUser.name == ''">{{ currentUser.name }}</h2>
                         <h2 *ngIf="currentDataUser.name != '' || currentUser.name != '' ">{{ currentDataUser.name }}
                         </h2>
@@ -35,20 +36,20 @@
 
                 <!-- <h5>ข้อมูลต่างๆ</h5> -->
                 <div class="details">
-                    <p *ngIf="currentDataUser.position == '' || currentUser.position == ''">ยังไม่ได้กำหนด
+                    <p *ngIf="currentDataUser.position == '' || currentUser.position == '' || currentDataUser.position == null">ยังไม่ได้กำหนด
                         <b>ตำแหน่งงาน</b>
                     </p>
                     <p *ngIf="currentDataUser.position != ''">ตำแหน่งงาน : {{currentDataUser.position}}</p>
 
-                    <p *ngIf="currentDataUser.department == '' || currentUser.department == ''">ยังไม่ได้กำหนด
+                    <p *ngIf="currentDataUser.department == '' || currentUser.department == '' || currentDataUser.department == null">ยังไม่ได้กำหนด
                         <b>แผนก</b></p>
                     <p *ngIf="currentDataUser.department != ''">แผนก : {{currentDataUser.department}}</p>
 
-                    <p *ngIf="currentDataUser.address == '' || currentUser.address == ''">ยังไม่ได้กำหนด <b>ที่อยู่</b>
+                    <p *ngIf="currentDataUser.address == '' || currentUser.address == '' || currentDataUser.address == null">ยังไม่ได้กำหนด <b>ที่อยู่</b>
                     </p>
                     <p *ngIf="currentDataUser.address != ''">ที่อยู่ : {{currentDataUser.address}}</p>
 
-                    <p *ngIf="currentDataUser.phone == '' || currentUser.phone== ''">ยังไม่ได้กำหนด <b>เบอร์โทรศัพท์</b>
+                    <p *ngIf="currentDataUser.phone == '' || currentUser.phone == '' || currentDataUser.phone == null">ยังไม่ได้กำหนด <b>เบอร์โทรศัพท์</b>
                     </p>
                     <p *ngIf="currentDataUser.phone != ''">เบอร์โทรศัพท์ : {{currentDataUser.phone}}</p>
                     <!-- </div> -->
@@ -56,12 +57,12 @@
 
                     <!-- <div class="date"> -->
 
-                    <p *ngIf="currentDataUser.phone_iffice == '' || currentUser.phone_iffice == ''">ยังไม่ได้กำหนด
+                    <p *ngIf="currentDataUser.phone_iffice == '' || currentUser.phone_iffice == '' || currentDataUser.phone_iffice == null">ยังไม่ได้กำหนด
                         <b>วันเดือนปีเกิด</b>
                     </p>
                     <p *ngIf="currentDataUser.phone_iffice != ''">เกิดเมื่อ : {{currentDataUser.phone_iffice}}</p>
 
-                    <p *ngIf="currentDataUser.age == '' || currentUser.age== ''">ยังไม่ได้กำหนด <b>อายุ</b></p>
+                    <p *ngIf="currentDataUser.age == '' || currentUser.age == '' || currentDataUser.age == null">ยังไม่ได้กำหนด <b>อายุ</b></p>
                     <p *ngIf="currentDataUser.age != ''">อายุ {{currentDataUser.age}} ปี</p>
                 </div>
 
@@ -84,32 +85,33 @@
                 </div> -->
                 <div class="name-tag">
                     <ion-item class="ion-no-padding custom" lines="none">
-                        <ion-input style="text-align: center;" [(ngModel)]="data_users.name" required type="text"
-                            placeholder="{{data_users.name ? 'ระบุชื่อของคุณ' : 'แก้ไขชื่อของคุณ'}}"></ion-input>
+                        <ion-input style="text-align: center;" [value]="name" (ngModelChange)="modelChangeFn($event)" [(ngModel)]="currentDataUser.name" required type="text"
+                            placeholder="{{currentDataUser.name ? 'ระบุชื่อของคุณ' : 'แก้ไขชื่อของคุณ'}}"></ion-input> 
                     </ion-item>
+                    
                     <!-- <span> @{{ currentUser.name }}</span> -->
                 </div>
                 <h5>ข้อมูลต่างๆ</h5>
                 <div class="details">
                     <ion-item fill="outline" class="custom">
                         <ion-label>ตำแหน่งงาน : </ion-label>
-                        <ion-input [(ngModel)]="data_users.position" required type="text"
-                            placeholder="{{data_users.position ? 'ระบุตำแหน่งงาน' : 'แก้ไขตำแหน่งงาน'}}"></ion-input>
+                        <ion-input [(ngModel)]="currentDataUser.position" required type="text"
+                            placeholder="{{currentDataUser.position ? 'ระบุตำแหน่งงาน' : 'แก้ไขตำแหน่งงาน'}}" [value]="position"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>แผนก : </ion-label>
-                        <ion-input [(ngModel)]="data_users.department" required type="text"
-                            placeholder="{{data_users.name ? 'ระบุแผนก' : 'แก้ไขแผนก'}}"></ion-input>
+                        <ion-input [(ngModel)]="currentDataUser.department" required type="text"
+                            placeholder="{{currentDataUser.department ? 'ระบุแผนก' : 'แก้ไขแผนก'}}" [value]="department"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>ที่อยู่ : </ion-label>
-                        <ion-input [(ngModel)]="data_users.address" required type="text"
-                            placeholder="{{data_users.name ? 'ระบุที่อยู่' : 'แก้ไขที่อยู่'}}"></ion-input>
+                        <ion-input [(ngModel)]="currentDataUser.address" required type="text"
+                            placeholder="{{currentDataUser.address ? 'ระบุที่อยู่' : 'แก้ไขที่อยู่'}}" [value]="address"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>เบอร์โทรศัพท์ : </ion-label>
-                        <ion-input [(ngModel)]="data_users.phone" required type="text"
-                            placeholder="{{data_users.name ? 'ระบุเบอร์โทรศัพท์' : 'แก้ไขเบอร์โทรศัพท์'}}"></ion-input>
+                        <ion-input [(ngModel)]="currentDataUser.phone" required type="text"
+                            placeholder="{{currentDataUser.phone ? 'ระบุเบอร์โทรศัพท์' : 'แก้ไขเบอร์โทรศัพท์'}}" [value]="phone"></ion-input>
                     </ion-item>
 
                     <!-- </div> -->
@@ -119,13 +121,13 @@
 
                     <ion-item fill="outline" class="custom">
                         <ion-label>เกิดเมื่อ : </ion-label>
-                        <ion-input [(ngModel)]="data_users.phone_iffice" required type="date"
-                            placeholder="{{data_users.name ? 'ระบุวันเกิด' : 'แก้ไขวันเกิด'}}"></ion-input>
+                        <ion-input [(ngModel)]="currentDataUser.phone_iffice" required type="date"
+                            placeholder="{{currentDataUser.phone_iffice ? 'ระบุวันเกิด' : 'แก้ไขวันเกิด'}}" [value]="phone_iffice"></ion-input>
                     </ion-item>
                     <ion-item fill="outline" class="custom">
                         <ion-label>อายุ : </ion-label>
-                        <ion-input [(ngModel)]="data_users.age" required type="text"
-                            placeholder="{{data_users.name ? 'ระบุอายุของคุณ' : 'แก้ไขอายุของคุณ'}}"></ion-input>
+                        <ion-input [(ngModel)]="currentDataUser.age" required type="text"
+                            placeholder="{{currentDataUser.age ? 'ระบุอายุของคุณ' : 'แก้ไขอายุของคุณ'}}" [value]="age"></ion-input>
                     </ion-item>
 
                 </div>

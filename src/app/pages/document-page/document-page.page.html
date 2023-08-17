@@ -219,6 +219,7 @@
 
 
   <ion-modal [isOpen]="isModalOpen">
+   
     <ng-template>
       <ion-header>
         <ion-toolbar class="document_sended">
@@ -228,7 +229,9 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
+      
       <ion-content class="ion-padding" style="--background: #769fcd;">
+      
         <ng-container *ngFor="let item of notificationGet">
           <ng-container *ngIf="item.send_id == currentUser.id">
 
@@ -241,6 +244,7 @@
               </ion-card-header>
 
               <ion-card-content>
+                {{item.id}}
                 <div class="detail_doc">
                   <p style="text-indent: 16px;">{{item.desc}}</p>
                   <p *ngIf="item.desc == '' || item.desc == null" style="text-indent: 16px;">ไม่ได้กำหนดเนื้อหา</p>

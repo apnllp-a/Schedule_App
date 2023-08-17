@@ -10,9 +10,13 @@ import { OverlayEventDetail } from '@ionic/core/components';
 import { notifiCations } from 'src/app/models/notifications/notifications.model';
 import { NotificationService } from 'src/app/services/notifications/notification.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { File, IWriteOptions } from '@ionic-native/file/ngx';
 
-
-
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { NavController, Platform } from '@ionic/angular';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-tab1',
   templateUrl: 'document-page.page.html',
@@ -30,7 +34,31 @@ export class Tab1Page implements OnInit {
    lName:any;
    notificationGet!: notifiCations[];
 
+
+   letterObj = {
+    to: '',
+    from: '',
+    text: ''
+  }
+
+  pdfObj : any;
+
   getBynotifiCations: notifiCations = {
+    type_doc: '',
+    title: '',
+    desc: '',
+    user_send: '',
+    send_id: '',
+    boss_name: '',
+    boss_id: '',
+    hr_name: '',
+    hr_id: '',
+    user_send_name: '',
+    user_send_id: '',
+    published: false
+  };
+
+  @Input() getBynotifiCationsget: notifiCations = {
     type_doc: '',
     title: '',
     desc: '',
@@ -55,7 +83,15 @@ export class Tab1Page implements OnInit {
       window.location.reload();
     }, 1000);
   };
-  constructor(private actionSheetCtrl: ActionSheetController,private alertController: AlertController, private storageService: StorageService,private notification: NotificationService, private authService: AuthService, public formBuilder: FormBuilder, private router: Router, private userAllService: UserAllService) { }
+
+  handleRefreshDocument(event) {
+    setTimeout(() => {
+      // Any calls to load data go here
+      event.target.complete();
+    }, 2000);
+  }
+
+  constructor(public navCtrl: NavController, private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheetCtrl: ActionSheetController,private alertController: AlertController, private storageService: StorageService,private notification: NotificationService, private authService: AuthService, public formBuilder: FormBuilder, private router: Router, private userAllService: UserAllService) { }
   ngOnInit() {
     this.retrieveUserAlls();
     this.currentUser = this.storageService.getUser();
@@ -164,42 +200,50 @@ export class Tab1Page implements OnInit {
     if (this.getBynotifiCations.type_doc == '') {
       console.log('เลือกประเภทก่อน')
       this.alert_text_save = 'ยังไม่ได้เลือกประเภทเอกสาร'
-      
+      this.presentAlert()
     }
     if (this.getBynotifiCations.desc == '' ) {
       console.log('เพิ่มรายก่อน')
       this.alert_text_save = 'ยังไม่ได้เพิ่มเนื้อหาของเอกสาร'
+      this.presentAlert()
     }
-    if (this.name == '' || this.name == null) {
+    if (this.name == '' ) {
       console.log('เพิ่มคนก่อน')
       this.alert_text_save = 'ยังไม่ได้กำหนดผู้รับ'
-     
+      this.presentAlert()
     }
 
     if (this.name == '' || this.name == null && this.getBynotifiCations.desc == '' && this.getBynotifiCations.type_doc == '') {
       console.log('เพิ่มข้อมูล')
       this.alert_text_save = 'กรุณากำหนดรายละเอียดเอกสาร'
+      this.presentAlert()
       
     }
-    this.presentAlert()
+
+    if (this.name != '' || this.name != null && this.getBynotifiCations.desc != '' && this.getBynotifiCations.type_doc != '') {
+      console.log('เพิ่มข้อมูลเรียบร้อย')
+      this.alert_text_save = 'เพิ่มข้อมูลเรียบร้อย'
+      
+    this.notification.create(data)
+    .subscribe({
+      next: (res) => {
+        console.log(res);
+        // if (this.submitted == true) {
+        //   // this.router.navigate(['/']);
+        //   console.log(res + 'success')
+        //   //  this.h3_alert = 'สมัครสมาชิกสำเร็จ'
+        //   //  this.p_alert = 'ไปหน้า Login เพื่อเข้าสู่ระบบ'
+        //   //  กรุณาตรวจสอบข้อมูลอีกครั้ง
+        //   this.presentAalert()
+        // }
+      },
+      error: (e) => console.error(e)
+    });
+  return;
+    }
+    
 
     
-    this.notification.create(data)
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          // if (this.submitted == true) {
-          //   // this.router.navigate(['/']);
-          //   console.log(res + 'success')
-          //   //  this.h3_alert = 'สมัครสมาชิกสำเร็จ'
-          //   //  this.p_alert = 'ไปหน้า Login เพื่อเข้าสู่ระบบ'
-          //   //  กรุณาตรวจสอบข้อมูลอีกครั้ง
-          //   this.presentAalert()
-          // }
-        },
-        error: (e) => console.error(e)
-      });
-    return;
 
   }
 
@@ -262,7 +306,7 @@ export class Tab1Page implements OnInit {
           }
         },
         {
-          text: 'ดูรายละเอียด',
+          text: 'Download PDF',
         
           data: {
             action: 'share',
@@ -289,7 +333,8 @@ export class Tab1Page implements OnInit {
     this.notification.delete(id).subscribe({
       next: (res) =>{
         console.log(res)
-        // window.location.reload();
+        console.log('Delete success')
+        window.location.reload();
       },
       error: (e) => console.error(e)
     });
@@ -297,10 +342,12 @@ export class Tab1Page implements OnInit {
   }
 
   gotoDoc(id:any):void{
-    this.notification.get(id).subscribe({
+    this.notification.getByID(id).subscribe({
       next: (res) =>{
         console.log(res)
-        window.location.href = '';
+        this.getBynotifiCationsget = res;
+
+        this.createPdf()
         // window.location.reload();
       },
       error: (e) => console.error(e)
@@ -308,4 +355,92 @@ export class Tab1Page implements OnInit {
 
   }
 
+  
+  createPdf() {
+    var docDefinition = {
+      watermark: { text: 'TEST watermark', fontSize: 20 },
+      
+      content: [
+        // {
+        //   image: 'strawberries'
+        // },
+        { text: this.getBynotifiCationsget.type_doc, style: 'logo' },
+        // { text: this.getBynotifiCationsget.type_doc, style: 'header' },
+        { text:  this.getBynotifiCationsget.updatedAt, alignment: 'right' },
+ 
+        { text: 'From' +' '+ 'Wikran', style: 'subheader' },
+ 
+ 
+        { text: this.getBynotifiCationsget.desc, style: 'story', margin: [0, 20, 0, 20] },
+ 
+        
+        { text: 'Apinan', style: 'subheadero' },
+        // {
+        //   ul: [
+        //     'Bacon',
+        //     'Rips',
+        //     'BBQ',
+        //   ]
+        // }
+      ],
+      styles: {
+        logo:{
+          fontSize: 18,
+          bold: true,
+          alignment:'center'
+        },
+        // header: {
+        //   fontSize: 18,
+        //   bold: true,
+        // },
+        subheader: {
+          fontSize: 14,
+          bold: true,
+          margin: [0, 15, 0, 0]
+        },
+
+        subheadero: {
+          fontSize: 14,
+          bold: true,
+          margin: [0, 15, 0, 0],
+          alignment:'right'
+        },
+        story: {
+          italic: true,
+          alignment: 'justify',
+          width: '100%',
+          
+        }
+      },
+
+      // images: {
+      //   strawberries: {
+      //     url: '',
+      //     headers: {
+      //       myheader: '123',
+      //       myotherheader: 'abc',
+      //     }
+      //   }
+      // }
+    }
+    this.pdfObj = pdfMake.createPdf(docDefinition);
+    this.downloadPdf()
+  }
+ 
+  downloadPdf() {
+    if (this.plt.is('cordova')) {
+      this.pdfObj.getBuffer((buffer) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+ 
+        // Save the PDF to the data Directory of our App
+        this.file.writeFile(this.file.dataDirectory, 'myletter.pdf', blob, { replace: true }).then(fileEntry => {
+          // Open the PDf with the correct OS tools
+          this.fileOpener.open(this.file.dataDirectory + 'myletter.pdf', 'application/pdf');
+        })
+      });
+    } else {
+      // On a browser simply use download!
+      this.pdfObj.download();
+    }
+  }
 }

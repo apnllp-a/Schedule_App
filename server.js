@@ -11,6 +11,7 @@ const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:8100',
   'http://localhost:8081',
+  '*'
 ];
 
 var corsOptions = {
@@ -42,7 +43,7 @@ app.use(
   cookieSession({
     name: "Schudule-session",
     secret: "COOKIE_SECRET", // should use as secret environment variable
-    httpOnly: true
+    httpOnly: false
   })
 );
 

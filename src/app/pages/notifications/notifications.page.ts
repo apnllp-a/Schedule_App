@@ -1,13 +1,15 @@
 import { Component,Input,OnInit,ViewEncapsulation } from '@angular/core';
+
 import { Location } from "@angular/common";
 import { StorageService } from 'src/app/_services/storage.service';
 import { notifiCations } from 'src/app/models/notifications/notifications.model';
 import { NotificationService } from 'src/app/services/notifications/notification.service';
-import JSPDF from 'jspdf';
-import domtoimage from 'dom-to-image';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File, IWriteOptions } from '@ionic-native/file/ngx';
-
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { NavController, Platform } from '@ionic/angular';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.page.html',
@@ -15,6 +17,13 @@ import { File, IWriteOptions } from '@ionic-native/file/ngx';
   encapsulation:ViewEncapsulation.None
 })
 export class NotificationsPage implements OnInit {
+  
+  letterObj = {
+    to: '',
+    from: '',
+    text: ''
+  }
+  pdfObj : any;
 
   todayNumber: number = Date.now();
   currentFood = undefined;
@@ -52,7 +61,7 @@ export class NotificationsPage implements OnInit {
     published: false
   };
   
-  constructor(private file: File, private fileOpener: FileOpener,location: Location,private storageService: StorageService,private notification:NotificationService) {
+  constructor(public navCtrl: NavController, private plt: Platform, private file: File, private fileOpener: FileOpener,location: Location,private storageService: StorageService,private notification:NotificationService) {
     this.url = location.path();
   // Split the url using "/"
   const parts = this.url.split("/");
@@ -93,64 +102,124 @@ export class NotificationsPage implements OnInit {
 
 
 
+  // createPdf() {
+  //   const pdfBlock: any = document.getElementById('print-wrapper');
+  //   const options = {
+  //     background: 'white',
+  //     height: pdfBlock.clientWidth,
+  //     width: pdfBlock.clientHeight,
+  //   };
+  //   domtoimage
+  //     .toPng(pdfBlock, options)
+  //     .then((fileUrl) => {
+  //       var doc = new JSPDF('p', 'mm', 'a4');
+  //       doc.addImage(fileUrl, 'PNG', 10, 10, 240, 180);
+  //       let docRes = doc.output();
+  //       let buffer = new ArrayBuffer(docRes.length);
+  //       let array = new Uint8Array(buffer);
+  //       for (var i = 0; i < docRes.length; i++) {
+  //         array[i] = docRes.charCodeAt(i);
+  //       }
+  //       const directory = this.file.dataDirectory;
+  //       const fileName = 'user-data.pdf';
+  //       let options: IWriteOptions = {
+  //         replace: true,
+  //       };
+  //       this.file
+  //         .checkFile(directory, fileName)
+  //         .then((res) => {
+  //           this.file
+  //             .writeFile(directory, fileName, buffer, options)
+  //             .then((res) => {
+  //               console.log('File generated' + JSON.stringify(res));
+  //               this.fileOpener
+  //                 .open(this.file.dataDirectory + fileName, 'application/pdf')
+  //                 .then(() => console.log('File is exported'))
+  //                 .catch((e) => console.log(e));
+  //             })
+  //             .catch((error) => {
+  //               console.log(JSON.stringify(error));
+  //             });
+  //         })
+  //         .catch((error) => {
+  //           this.file
+  //             .writeFile(directory, fileName, buffer)
+  //             .then((res) => {
+  //               console.log('File generated' + JSON.stringify(res));
+  //               this.fileOpener
+  //                 .open(this.file.dataDirectory + fileName, 'application/pdf')
+  //                 .then(() => console.log('File exported'))
+  //                 .catch((e) => console.log(e));
+  //             })
+  //             .catch((error) => {
+  //               console.log(JSON.stringify(error));
+  //             });
+  //         });
+  //     })
+  //     .catch(function (error) {
+  //       console.error(error);
+  //     });
+  // }
+
   createPdf() {
-    const pdfBlock: any = document.getElementById('print-wrapper');
-    const options = {
-      background: 'white',
-      height: pdfBlock.clientWidth,
-      width: pdfBlock.clientHeight,
-    };
-    domtoimage
-      .toPng(pdfBlock, options)
-      .then((fileUrl) => {
-        var doc = new JSPDF('p', 'mm', 'a4');
-        doc.addImage(fileUrl, 'PNG', 10, 10, 240, 180);
-        let docRes = doc.output();
-        let buffer = new ArrayBuffer(docRes.length);
-        let array = new Uint8Array(buffer);
-        for (var i = 0; i < docRes.length; i++) {
-          array[i] = docRes.charCodeAt(i);
+    var docDefinition = {
+      content: [
+        { text: this.getBynotifiCations.type_doc, style: 'header' },
+        { text:  this.getBynotifiCations.updatedAt, alignment: 'right' },
+ 
+        { text: 'From', style: 'subheader' },
+        { text: this.letterObj.from },
+ 
+        { text: 'To', style: 'subheader' },
+        this.letterObj.to,
+ 
+        { text: this.getBynotifiCations.desc, style: 'story', margin: [0, 20, 0, 20] },
+ 
+        // {
+        //   ul: [
+        //     'Bacon',
+        //     'Rips',
+        //     'BBQ',
+        //   ]
+        // }
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          alignment:'center'
+        },
+        subheader: {
+          fontSize: 14,
+          bold: true,
+          margin: [0, 15, 0, 0]
+        },
+        story: {
+          italic: true,
+          alignment: 'center',
+          width: '50%',
         }
-        const directory = this.file.dataDirectory;
-        const fileName = 'user-data.pdf';
-        let options: IWriteOptions = {
-          replace: true,
-        };
-        this.file
-          .checkFile(directory, fileName)
-          .then((res) => {
-            this.file
-              .writeFile(directory, fileName, buffer, options)
-              .then((res) => {
-                console.log('File generated' + JSON.stringify(res));
-                this.fileOpener
-                  .open(this.file.dataDirectory + fileName, 'application/pdf')
-                  .then(() => console.log('File is exported'))
-                  .catch((e) => console.log(e));
-              })
-              .catch((error) => {
-                console.log(JSON.stringify(error));
-              });
-          })
-          .catch((error) => {
-            this.file
-              .writeFile(directory, fileName, buffer)
-              .then((res) => {
-                console.log('File generated' + JSON.stringify(res));
-                this.fileOpener
-                  .open(this.file.dataDirectory + fileName, 'application/pdf')
-                  .then(() => console.log('File exported'))
-                  .catch((e) => console.log(e));
-              })
-              .catch((error) => {
-                console.log(JSON.stringify(error));
-              });
-          });
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
+      }
+    }
+    this.pdfObj = pdfMake.createPdf(docDefinition);
+    this.downloadPdf()
   }
-
-
+ 
+  downloadPdf() {
+    if (this.plt.is('cordova')) {
+      this.pdfObj.getBuffer((buffer) => {
+        var blob = new Blob([buffer], { type: 'application/pdf' });
+ 
+        // Save the PDF to the data Directory of our App
+        this.file.writeFile(this.file.dataDirectory, 'myletter.pdf', blob, { replace: true }).then(fileEntry => {
+          // Open the PDf with the correct OS tools
+          this.fileOpener.open(this.file.dataDirectory + 'myletter.pdf', 'application/pdf');
+        })
+      });
+    } else {
+      // On a browser simply use download!
+      this.pdfObj.download();
+    }
+  }
+ 
 }

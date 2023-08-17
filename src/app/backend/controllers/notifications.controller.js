@@ -105,7 +105,7 @@ exports.update = (req, res) => {
 
 // Delete a notification with the specified id in the request
 exports.delete = (req, res) => {
-    const id = req.params.user_send_id;
+    const id = req.params.id;
     notifiCations.findByIdAndRemove(id, { useFindAndModify: false }).then(data => {
         if (!data) {
             res.status(404).send({ message: `Cannot delete notification with id=${id}. Maybe notification was not found.` });

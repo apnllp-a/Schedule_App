@@ -8,6 +8,8 @@ import { NotificationsPageRoutingModule } from './notifications-routing.module';
 
 import { NotificationsPage } from './notifications.page';
 
+
+
 @NgModule({
   imports: [
     CommonModule,

@@ -35,8 +35,16 @@ export class PersonalPage implements OnInit {
 
   err_checkPass: boolean | undefined;
 
+  name: String;
+  position: String;
+  department: String;
+  address: String;
+  phone: String;
+  phone_iffice: String;
+  age: String;
+
   data_users: dataUsers = {
-    name: '',
+   name: '',
     department: '',
     position: '',
     address: '',
@@ -96,29 +104,35 @@ export class PersonalPage implements OnInit {
   //     });
   // }
 
+ 
   retrieveUser(): void {
     this.Services.getAll().subscribe({
       next: (data) => {
         this.user_all = data;
         for (let index = 0; index < this.user_all.length; index++) {
           const element = this.user_all[index];
-          console.log(element);
+         
           if (element.user_id == this.currentUser.id) {
-            console.log(element)
             this.currentDataUser = element;
+            console.log(this.currentDataUser);
           }
         }
         this.Services.get(this.currentUser.id).pipe(
           tap((data2) => {
-            // this.currentDataUser = data2;
-            //  console.log( this.currentDataUser);
             this.ck_user_id = this.currentDataUser.user_id;
           })
         ).subscribe({
           next: (data2) => {
             this.ck_user_id = data2.user_id;
             // Further processing that depends on this.ck_user_id
-
+            this.name = data2.name!;
+            this.position  = data2.position!;
+            this.department = data2.department!;
+            this.address = data2.address!;
+            this.phone = data2.phone!;
+            this.phone_iffice = data2.phone_iffice!;
+            this.age = data2.age!;
+           
             // Rest of your code
           },
           error: (e) => console.error(e)
@@ -150,14 +164,14 @@ export class PersonalPage implements OnInit {
 
   saveTutorial(e: any): void {
     const data = {
-      name: this.data_users.name,
-      department: this.data_users.department,
-      position: this.data_users.position,
-      address: this.data_users.address,
-      phone: this.data_users.phone,
-      phone_iffice: this.data_users.phone_iffice,
-      age: this.data_users.age,
-      user_id: this.currentUser.id
+      'name': this.currentDataUser.name,
+      'department': this.currentDataUser.department,
+      'position': this.currentDataUser.position,
+      'address': this.currentDataUser.address,
+      'phone': this.currentDataUser.phone,
+      'phone_iffice': this.currentDataUser.phone_iffice,
+      'age': this.currentDataUser.age,
+      'user_id': this.currentUser.id
     };
 
     if (data.user_id == e) {
@@ -167,6 +181,7 @@ export class PersonalPage implements OnInit {
           .subscribe({
             next: (res) => {
               console.log(res);
+              
               this.reloadPage();
             },
             error: (e) => console.error(e)
@@ -183,11 +198,11 @@ export class PersonalPage implements OnInit {
     } else {
       this.Services.create(data).subscribe({
         next: (res) => {
-          console.log(res)
           this.reloadPage();
         },
         error: (e) => console.log(e)
       });
+      console.log('ARRR data !!')
     }
   }
 
@@ -321,7 +336,15 @@ export class PersonalPage implements OnInit {
   }
 
 
-
+  modelChangeFn(e) {
+    // this.name
+    // this.position
+    // this.department
+    // this.address
+    // this.phone
+    // this.phone_iffice
+    // this.age
+  }
 
 
 
