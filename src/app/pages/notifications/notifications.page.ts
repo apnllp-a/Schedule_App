@@ -162,6 +162,23 @@ export class NotificationsPage implements OnInit {
   // }
 
   createPdf() {
+
+    pdfMake.fonts = {
+      THSarabunNew: {
+        normal: 'THSarabunNew.ttf',
+        bold: 'THSarabunNewB.ttf',
+        italics: 'THSarabunNewItalic.ttf',
+        bolditalics: 'THSarabunNewBoldItalic.ttf'
+      },
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      },
+      
+
+    }
     var docDefinition = {
       content: [
         { text: this.getBynotifiCations.type_doc, style: 'header' },
@@ -183,6 +200,9 @@ export class NotificationsPage implements OnInit {
         //   ]
         // }
       ],
+      defaultStyle: {
+        font: 'THSarabunNew'
+      },
       styles: {
         header: {
           fontSize: 18,

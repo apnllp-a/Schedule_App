@@ -47,6 +47,8 @@ export class LoginPage implements OnInit {
     }
     console.log(this.roles)
 
+    // this.retrieveUserAlls()
+
   }
 
   async presentAlert() {

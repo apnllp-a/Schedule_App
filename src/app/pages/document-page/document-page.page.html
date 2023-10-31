@@ -266,6 +266,17 @@
             </ion-card>
           </ng-container>
         </ng-container>
+        <ng-container *ngIf="check_doc">
+          <ion-card style="--background: #769fcd; color: #fff;box-shadow:none; display: flex;flex-direction: column;align-items: center;" class="bg-ion-card">
+            <ion-card-header>
+              <ion-img src="../../../assets/images/login.png" alt="img-logo login"></ion-img>
+            </ion-card-header>
+
+            <ion-card-content>
+              <p style="font-size: 18px;">ไม่พบเอกสาร <span style="color: red;">!</span></p>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
       </ion-content>
     </ng-template>
   </ion-modal>

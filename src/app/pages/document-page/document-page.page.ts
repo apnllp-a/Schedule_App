@@ -5,7 +5,6 @@ import { ActionSheetController, AlertController, IonModal } from '@ionic/angular
 import { AuthService } from 'src/app/_services/auth.service';
 import { UserAll } from 'src/app/models/user/user-all.model';
 import { UserAllService } from 'src/app/services/user/user-all.service';
-import { Item } from './types';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { notifiCations } from 'src/app/models/notifications/notifications.model';
 import { NotificationService } from 'src/app/services/notifications/notification.service';
@@ -13,10 +12,25 @@ import { StorageService } from 'src/app/_services/storage.service';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { File, IWriteOptions } from '@ionic-native/file/ngx';
 
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { NavController, Platform } from '@ionic/angular';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+
+
+
+// import pdfMake from "pdfmake/build/pdfmake.js";
+// import vfsFonts from "pdfmake/build/vfs_fonts.js";
+
+// pdfMake.vfs = vfsFonts.pdfMake.vfs; 
+
+
+// (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
+import * as pdfMakeConfig from 'pdfmake/build/pdfmake.js';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
+pdfMakeConfig.vfs  = pdfFonts.pdfMake.vfs;
+import * as pdfMake from 'pdfmake/build/pdfmake';
+
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'document-page.page.html',
@@ -29,19 +43,20 @@ export class Tab1Page implements OnInit {
   user_all!: UserAll[];
   notifi_!: notifiCations[];
   currentUser: any;
-  idFormselcet:any;
-   fName:any;
-   lName:any;
-   notificationGet!: notifiCations[];
+  idFormselcet: any;
+  fName: any;
+  lName: any;
+  notificationGet!: notifiCations[];
+  check_doc = false;
 
 
-   letterObj = {
+  letterObj = {
     to: '',
     from: '',
     text: ''
   }
 
-  pdfObj : any;
+  pdfObj: any;
 
   getBynotifiCations: notifiCations = {
     type_doc: '',
@@ -91,12 +106,18 @@ export class Tab1Page implements OnInit {
     }, 2000);
   }
 
-  constructor(public navCtrl: NavController, private plt: Platform, private file: File, private fileOpener: FileOpener,private actionSheetCtrl: ActionSheetController,private alertController: AlertController, private storageService: StorageService,private notification: NotificationService, private authService: AuthService, public formBuilder: FormBuilder, private router: Router, private userAllService: UserAllService) { }
+  constructor(public navCtrl: NavController, private plt: Platform, private file: File, private fileOpener: FileOpener, private actionSheetCtrl: ActionSheetController, private alertController: AlertController, private storageService: StorageService, private notification: NotificationService, private authService: AuthService, public formBuilder: FormBuilder, private router: Router, private userAllService: UserAllService) {
+
+
+
+   }
   ngOnInit() {
     this.retrieveUserAlls();
     this.currentUser = this.storageService.getUser();
     this.retrieveNotifications();
     console.log(this.currentUser)
+
+
   }
   retrieveUserAlls(): void {
     this.userAllService.getAll()
@@ -111,7 +132,7 @@ export class Tab1Page implements OnInit {
       });
   }
 
-  retrieveUserByID(id:any): void {
+  retrieveUserByID(id: any): void {
     this.userAllService.get(id)
       .subscribe({
         next: (data) => {
@@ -173,9 +194,9 @@ export class Tab1Page implements OnInit {
 
 
 
-  alert_text_save:any;
+  alert_text_save: any;
 
-  refresher_input(){
+  refresher_input() {
     this.getBynotifiCations.type_doc = '';
     this.getBynotifiCations.desc = '';
     this.name = '';
@@ -202,12 +223,12 @@ export class Tab1Page implements OnInit {
       this.alert_text_save = 'ยังไม่ได้เลือกประเภทเอกสาร'
       this.presentAlert()
     }
-    if (this.getBynotifiCations.desc == '' ) {
+    if (this.getBynotifiCations.desc == '') {
       console.log('เพิ่มรายก่อน')
       this.alert_text_save = 'ยังไม่ได้เพิ่มเนื้อหาของเอกสาร'
       this.presentAlert()
     }
-    if (this.name == '' ) {
+    if (this.name == '') {
       console.log('เพิ่มคนก่อน')
       this.alert_text_save = 'ยังไม่ได้กำหนดผู้รับ'
       this.presentAlert()
@@ -217,33 +238,33 @@ export class Tab1Page implements OnInit {
       console.log('เพิ่มข้อมูล')
       this.alert_text_save = 'กรุณากำหนดรายละเอียดเอกสาร'
       this.presentAlert()
-      
+
     }
 
     if (this.name != '' || this.name != null && this.getBynotifiCations.desc != '' && this.getBynotifiCations.type_doc != '') {
       console.log('เพิ่มข้อมูลเรียบร้อย')
       this.alert_text_save = 'เพิ่มข้อมูลเรียบร้อย'
-      
-    this.notification.create(data)
-    .subscribe({
-      next: (res) => {
-        console.log(res);
-        // if (this.submitted == true) {
-        //   // this.router.navigate(['/']);
-        //   console.log(res + 'success')
-        //   //  this.h3_alert = 'สมัครสมาชิกสำเร็จ'
-        //   //  this.p_alert = 'ไปหน้า Login เพื่อเข้าสู่ระบบ'
-        //   //  กรุณาตรวจสอบข้อมูลอีกครั้ง
-        //   this.presentAalert()
-        // }
-      },
-      error: (e) => console.error(e)
-    });
-  return;
-    }
-    
 
-    
+      this.notification.create(data)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            // if (this.submitted == true) {
+            //   // this.router.navigate(['/']);
+            //   console.log(res + 'success')
+            //   //  this.h3_alert = 'สมัครสมาชิกสำเร็จ'
+            //   //  this.p_alert = 'ไปหน้า Login เพื่อเข้าสู่ระบบ'
+            //   //  กรุณาตรวจสอบข้อมูลอีกครั้ง
+            //   this.presentAalert()
+            // }
+          },
+          error: (e) => console.error(e)
+        });
+      return;
+    }
+
+
+
 
   }
 
@@ -251,7 +272,7 @@ export class Tab1Page implements OnInit {
     const alert = await this.alertController.create({
       header: 'ส่งไม่สำเร็จ',
       // subHeader: 'Important message',
-      message:  this.alert_text_save,
+      message: this.alert_text_save,
       buttons: ['OK'],
     });
 
@@ -262,17 +283,29 @@ export class Tab1Page implements OnInit {
     this.notification.getAll()
       .subscribe({
         next: (data) => {
-              // this.notification.get(this.id_noti).subscribe({
-              //   next: (data2) => {
-              data;
-              this.notificationGet = data;
-              //     console.log(this.getBynotifiCations)
-              //   }
-              // })
+          // this.notification.get(this.id_noti).subscribe({
+          //   next: (data2) => {
+          data;
+          this.notificationGet = data;
+
+          for (let index = 0; index < this.notificationGet.length; index++) {
+            const element = this.notificationGet[index];
+
+            if (element.send_id != this.currentUser.id) {
+              this.check_doc = true;
+            }
+            if (element.send_id == this.currentUser.id) {
+              this.check_doc = false;
+            }
+
+          }
+          //     console.log(this.getBynotifiCations)
+          //   }
+          // })
           // this.notifi_ = data;
           // this.itemCheck = data.length;
 
-         
+
           console.log(this.notificationGet)
           // console.log(this.itemCheck)
         },
@@ -290,7 +323,7 @@ export class Tab1Page implements OnInit {
 
 
 
-  async presentActionSheet(id:any) {
+  async presentActionSheet(id: any) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Actions',
       buttons: [
@@ -307,12 +340,12 @@ export class Tab1Page implements OnInit {
         },
         {
           text: 'Download PDF',
-        
+
           data: {
             action: 'share',
           },
           handler: () => {
-           this.gotoDoc(id)
+            this.gotoDoc(id)
             // this.reloadPage();
           }
         },
@@ -329,9 +362,9 @@ export class Tab1Page implements OnInit {
     await actionSheet.present();
   }
 
-  deleteDoc(id:any):void{
+  deleteDoc(id: any): void {
     this.notification.delete(id).subscribe({
-      next: (res) =>{
+      next: (res) => {
         console.log(res)
         console.log('Delete success')
         window.location.reload();
@@ -341,9 +374,9 @@ export class Tab1Page implements OnInit {
 
   }
 
-  gotoDoc(id:any):void{
+  gotoDoc(id: any): void {
     this.notification.getByID(id).subscribe({
-      next: (res) =>{
+      next: (res) => {
         console.log(res)
         this.getBynotifiCationsget = res;
 
@@ -355,25 +388,43 @@ export class Tab1Page implements OnInit {
 
   }
 
-  
+
+
   createPdf() {
+    pdfMakeConfig.fonts = {
+      THSarabunNew: {
+        normal: 'THSarabunNew.ttf',
+        bold: 'THSarabunNew Bold.ttf',
+        italics: 'THSarabunNew Italic.ttf',
+        bolditalics: 'THSarabunNew BoldItalic.ttf'
+        },
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      },
+      
+
+    }
+
     var docDefinition = {
       watermark: { text: 'TEST watermark', fontSize: 20 },
-      
+
       content: [
         // {
         //   image: 'strawberries'
         // },
         { text: this.getBynotifiCationsget.type_doc, style: 'logo' },
         // { text: this.getBynotifiCationsget.type_doc, style: 'header' },
-        { text:  this.getBynotifiCationsget.updatedAt, alignment: 'right' },
- 
-        { text: 'From' +' '+ 'Wikran', style: 'subheader' },
- 
- 
+        { text: this.getBynotifiCationsget.updatedAt, alignment: 'right' },
+
+        { text: 'From' + ' ' + 'กรานต์', style: 'subheader' },
+
+
         { text: this.getBynotifiCationsget.desc, style: 'story', margin: [0, 20, 0, 20] },
- 
-        
+
+
         { text: 'Apinan', style: 'subheadero' },
         // {
         //   ul: [
@@ -383,11 +434,14 @@ export class Tab1Page implements OnInit {
         //   ]
         // }
       ],
+      defaultStyle: {
+        font: 'THSarabunNew'
+      },
       styles: {
-        logo:{
+        logo: {
           fontSize: 18,
           bold: true,
-          alignment:'center'
+          alignment: 'center'
         },
         // header: {
         //   fontSize: 18,
@@ -403,13 +457,13 @@ export class Tab1Page implements OnInit {
           fontSize: 14,
           bold: true,
           margin: [0, 15, 0, 0],
-          alignment:'right'
+          alignment: 'right'
         },
         story: {
           italic: true,
           alignment: 'justify',
           width: '100%',
-          
+
         }
       },
 
@@ -423,15 +477,16 @@ export class Tab1Page implements OnInit {
       //   }
       // }
     }
+    
     this.pdfObj = pdfMake.createPdf(docDefinition);
     this.downloadPdf()
   }
- 
+
   downloadPdf() {
     if (this.plt.is('cordova')) {
       this.pdfObj.getBuffer((buffer) => {
         var blob = new Blob([buffer], { type: 'application/pdf' });
- 
+
         // Save the PDF to the data Directory of our App
         this.file.writeFile(this.file.dataDirectory, 'myletter.pdf', blob, { replace: true }).then(fileEntry => {
           // Open the PDf with the correct OS tools
