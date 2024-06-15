@@ -118,6 +118,9 @@ export class LoginPage implements OnInit {
     }, error => {
       console.log(error)
     })
+
+
+    
   }
 
 
@@ -148,6 +151,24 @@ export class LoginPage implements OnInit {
       this.route.navigate(['/tabs'])
     });
 
+  }
+
+    
+  loginUserX() {
+    const credentials = {
+      username: 'testuser',
+      password: 'testpassword'
+    };
+
+    this.authService.loginx(credentials).subscribe(
+      (response) => {
+        console.log('Login successful:', response);
+        // Store the token and user details in local storage or a service for later use
+      },
+      (error) => {
+        console.error('Login failed:', error);
+      }
+    );
   }
 
 }

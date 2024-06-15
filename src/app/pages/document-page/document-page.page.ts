@@ -14,16 +14,7 @@ import { File, IWriteOptions } from '@ionic-native/file/ngx';
 
 import { NavController, Platform } from '@ionic/angular';
 
-
-
-
-// import pdfMake from "pdfmake/build/pdfmake.js";
-// import vfsFonts from "pdfmake/build/vfs_fonts.js";
-
-// pdfMake.vfs = vfsFonts.pdfMake.vfs; 
-
-
-// (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+import * as moment from 'moment';
 
 import * as pdfMakeConfig from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts.js';
@@ -38,6 +29,10 @@ import * as pdfMake from 'pdfmake/build/pdfmake';
   encapsulation: ViewEncapsulation.None
 })
 export class Tab1Page implements OnInit {
+  @ViewChild('fileInput', { static: false }) fileInput;
+  selectedFile: File;
+  previewImageUrl: string;
+
   todayNumber: number = Date.now();
   currentFood = undefined;
   user_all!: UserAll[];
@@ -143,6 +138,8 @@ export class Tab1Page implements OnInit {
         error: (e) => console.error(e)
       });
   }
+
+  
 
   currentTutorial: UserAll = {};
   currentIndex = -1;
@@ -387,16 +384,46 @@ export class Tab1Page implements OnInit {
     });
 
   }
+  
 
 
 
-  createPdf() {
+  createPdf(): void{
+    moment.locale('th');
+    const test: string = moment(this.getBynotifiCationsget.updatedAt).format('Do MMMM YYYY');
+    var accc = this.getBynotifiCationsget.type_doc;
+    var full;
+    if (accc == '0') {
+       full = 'เอกสารการลา'
+    }
+    if (accc == '1') {
+       full = 'เอกสารรายงาน'
+    }
+    if (accc == '2') {
+       full = 'เอกสารการแลกเปลี่ยนเวร'
+    }
+    // Split the text into paragraphs
+const paragraphs: string[] = this.getBynotifiCationsget.desc!.split('\n');
+
+// Create an array to hold the formatted paragraphs
+const formattedParagraphs: any[] = [];
+
+// Apply indentation to each paragraph
+paragraphs.forEach((paragraph: string) => {
+    formattedParagraphs.push({
+        text: paragraph,
+        style: 'story',
+        margin: [20, 0, 0, 0] // Adjust indentation as needed
+    });
+});
+
+    
     pdfMakeConfig.fonts = {
       THSarabunNew: {
         normal: 'THSarabunNew.ttf',
-        bold: 'THSarabunNew Bold.ttf',
-        italics: 'THSarabunNew Italic.ttf',
-        bolditalics: 'THSarabunNew BoldItalic.ttf'
+        bold: 'THSarabunNew-Bold.ttf',
+        italics: 'THSarabunNew-Italic.ttf',
+        bolditalics: 'THSarabunNew-BoldItalic.ttf'
         },
       Roboto: {
         normal: 'Roboto-Regular.ttf',
@@ -408,24 +435,71 @@ export class Tab1Page implements OnInit {
 
     }
 
-    var docDefinition = {
-      watermark: { text: 'TEST watermark', fontSize: 20 },
+    
 
+    var docDefinition = {
+
+      
+      watermark: { text: 'SCHEDULE', fontSize: 72 ,color: '#769FCD',bold:true },
+      // header: 'Schedule' ,color: '#769FCD',
+
+      // footer: {
+      //   columns: [
+      //     'Schedule',
+      //     { text: 'Schedule', alignment: 'right' ,color: '#769FCD'}
+      //   ]
+      // },
+      // background: function(currentPage, pageSize) {
+      //   return `page ${currentPage} with size ${pageSize.width} x ${pageSize.height}`
+      // },
+    
+      pageMargins: [ 40, 60, 40, 60 ],
       content: [
         // {
         //   image: 'strawberries'
         // },
-        { text: this.getBynotifiCationsget.type_doc, style: 'logo' },
+        
+        { text: 'บันทึกเอกสาร', style: 'logo' },
         // { text: this.getBynotifiCationsget.type_doc, style: 'header' },
-        { text: this.getBynotifiCationsget.updatedAt, alignment: 'right' },
+        // { text: test, alignment: 'right',fontSize:'18' },
+        {
+          text: [
+              { text:'เรื่อง' , color: '#000' }, // Apply red color to this part of the text
+              ' ' + full // Concatenate with the other part of the text
+          ],
+          style: 'subheader'
+      },
+        {
+          text: [
+              { text: 'เรียน', color: '#000' }, // Apply red color to this part of the text
+              ' ' + this.getBynotifiCationsget.user_send_id // Concatenate with the other part of the text
+          ],
+          style: 'subheader'
+      },
+        
 
-        { text: 'From' + ' ' + 'กรานต์', style: 'subheader' },
+        { text: this.getBynotifiCationsget.desc, style: 'story'},
 
-
-        { text: this.getBynotifiCationsget.desc, style: 'story', margin: [0, 20, 0, 20] },
-
-
-        { text: 'Apinan', style: 'subheadero' },
+        // {text: 'จาก', style: 'subheadero' },
+        // { text: this.getBynotifiCationsget.user_send, style: 'subheadero' },
+        {
+          columns: [
+              { width: '*', text: '', style: 'subheadero', alignment: 'right' }, // Align to the right
+              { width: '*', text:'จาก', style: 'subheadero', alignment: 'center' } // Center-align
+          ]
+      },
+      {
+          columns: [
+              { width: '*', text: '', style: 'subheadero', alignment: 'right' }, // Align to the right
+              { width: '*', text:  this.getBynotifiCationsget.user_send, style: 'subheadero', alignment: 'center' } // Center-align
+          ]
+      },
+      {
+          columns: [
+              { width: '*', text: '', style: 'subheadero', alignment: 'right' }, // Align to the right
+              { width: '*', text:  test, style: 'subheadero', alignment: 'center' } // Center-align
+          ]
+      },
         // {
         //   ul: [
         //     'Bacon',
@@ -434,12 +508,14 @@ export class Tab1Page implements OnInit {
         //   ]
         // }
       ],
+      
+      
       defaultStyle: {
         font: 'THSarabunNew'
       },
       styles: {
         logo: {
-          fontSize: 18,
+          fontSize: 24,
           bold: true,
           alignment: 'center'
         },
@@ -448,28 +524,31 @@ export class Tab1Page implements OnInit {
         //   bold: true,
         // },
         subheader: {
-          fontSize: 14,
+          fontSize: 18,
           bold: true,
-          margin: [0, 15, 0, 0]
+          // margin: [0, 15, 0, 0]
         },
 
         subheadero: {
-          fontSize: 14,
-          bold: true,
-          margin: [0, 15, 0, 0],
-          alignment: 'right'
+          fontSize: 18,
+          italic: true,
+          // margin: [0, 15, 0, 0],
+          // alignment: 'right'
         },
         story: {
           italic: true,
-          alignment: 'justify',
-          width: '100%',
+          // alignment: 'justify',
+          width: '100',
+          fontSize: 18,
+          margin: [0, 20, 0, 20],
+          textIndent: 50,
 
         }
       },
 
       // images: {
       //   strawberries: {
-      //     url: '',
+      //     url: 'https://picsum.photos/id/1080/367/267',
       //     headers: {
       //       myheader: '123',
       //       myotherheader: 'abc',
@@ -478,7 +557,7 @@ export class Tab1Page implements OnInit {
       // }
     }
     
-    this.pdfObj = pdfMake.createPdf(docDefinition);
+    this.pdfObj = pdfMake.createPdf(docDefinition).download(full);
     this.downloadPdf()
   }
 
@@ -497,5 +576,11 @@ export class Tab1Page implements OnInit {
       // On a browser simply use download!
       this.pdfObj.download();
     }
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
+    // You can now use the selected file for further processing
   }
 }

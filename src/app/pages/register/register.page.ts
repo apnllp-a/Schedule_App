@@ -24,10 +24,12 @@ export class RegisterPage implements OnInit {
 
 //แบบใหม่แบบสับ
   form: any = {
-    name:null,
+    firstName:null,
+    lastName:null,
     username: null,
     email: null,
-    password: null
+    password: null,
+    department: 'Employee'
   };
   isSuccessful = false;
   isSignUpFailed = false;
@@ -57,6 +59,10 @@ export class RegisterPage implements OnInit {
       { type: 'passwordNotAvailable', message: 'Your password is already taken.' }
     ],
     // other validations
+
+
+    
+
   };
   
 
@@ -270,6 +276,26 @@ export class RegisterPage implements OnInit {
 
   }
 
+  registerUser() {
+    const user = {
+      username: 'testuser',
+      firstName: 'Test',
+      lastName: 'User',
+      password: 'testpassword',
+      department: 'IT'
+    };
 
+    this.authService.registerx(user).subscribe(
+      (response) => {
+        console.log('Registration successful:', response);
+      },
+      (error) => {
+        console.error('Registration failed:', error);
+      }
+    );
+  }
+
+
+  
 
 }

@@ -86,6 +86,8 @@
           </ion-textarea>
         </ion-item>
 
+        
+
 
         <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end">
           <ion-fab-button>
@@ -106,9 +108,15 @@
 
       </ion-card-content>
 
-
+     
     </ion-card>
-
+    <ion-card>
+      <ion-button (click)="fileInput.click()">Select File</ion-button>
+      <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+      <div *ngIf="selectedFile">
+        <p>Selected File: {{ selectedFile.name }}</p>
+      </div>
+    </ion-card>
     <!-- <ion-card class="name-confirm">
       <ion-card-content>
         <div class="approver">
@@ -284,3 +292,4 @@
  
 
 </div>
+

@@ -201,7 +201,7 @@ export class NotificationsPage implements OnInit {
         // }
       ],
       defaultStyle: {
-        font: 'THSarabunNew'
+        font: 'Roboto'
       },
       styles: {
         header: {

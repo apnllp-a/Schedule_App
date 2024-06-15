@@ -52,4 +52,28 @@ export class AuthService {
   logout(): Observable<any> {
     return this.http.post(AUTH_API + 'signout', { }, httpOptions);
   }
+
+
+  private apiUrl = 'http://localhost:8080/users'; // Update with your actual backend URL
+
+
+  registerx(user: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      withCredentials: true  // Ensure credentials are sent with the request
+    };
+    return this.http.post(`${this.apiUrl}/register`, user, httpOptions);
+  }
+
+  loginx(credentials: { username: string, password: string }): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      withCredentials: true  // Ensure credentials are sent with the request
+    };
+    return this.http.post(`${this.apiUrl}/login`, credentials, httpOptions);
+  }
 }

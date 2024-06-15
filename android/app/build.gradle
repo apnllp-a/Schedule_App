@@ -61,3 +61,16 @@ try {
 } catch(Exception e) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }
+
+
+android {
+  compileSdkVersion 30
+  defaultConfig {
+    applicationId "com.your.app"
+    minSdkVersion 21
+    targetSdkVersion 30
+    versionCode 1
+    versionName "1.0"
+  }
+}
+
