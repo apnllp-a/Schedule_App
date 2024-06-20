@@ -51,7 +51,7 @@
             <ion-label style="font-weight: 600;color: #769fcd;margin-right: 16px;">เรียน</ion-label>
             <p style=" min-width: 150px;">{{fName}} {{lName}}</p>
             <!-- <ion-input [clearInput]="true" [(ngModel)]="firstname" class="custom">{{fName}} {{lName}}</ion-input> -->
-            <ion-button id="open-modal" color="medium"   type="button" (click)="searchName()">
+            <ion-button id="open-modal" color="medium"   type="button" >
               <ion-icon  name="search-outline"></ion-icon>
             </ion-button>
 
@@ -174,6 +174,7 @@
     </ion-card>
     <!-- <ion-button expand="block" (click)="setOpen(true)">Open</ion-button> -->
 
+    
   </ion-content>
 
 
@@ -202,7 +203,7 @@
         <ion-item lines="none">
           <ion-radio-group style="width: 100%;" [(ngModel)]="name">
             <ng-container *ngFor="let item of user_all">
-              <ng-container *ngIf="item.firstname != '' && item.firstname != null">
+              <!-- <ng-container *ngIf="item.firstName != '' && item.firstName != null"> -->
 
                 <ion-radio value="{{item.id}}">
 
@@ -211,13 +212,13 @@
                       <img alt="Silhouette of a person's head"
                         src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                     </ion-avatar>
-                    <ion-label>{{item.firstname}} {{item.lastname}}</ion-label>
+                    <ion-label>{{item.firstName}} {{item.lastName}}</ion-label>
                     <!-- <ion-icon name="close"></ion-icon> -->
                   </ion-item>
                 </ion-radio>
 
               </ng-container>
-            </ng-container>
+            <!-- </ng-container> -->
           </ion-radio-group>
         </ion-item>
 

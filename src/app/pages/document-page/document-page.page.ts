@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActionSheetController, AlertController, IonModal } from '@ionic/angular';
 import { AuthService } from 'src/app/_services/auth.service';
-import { UserAll } from 'src/app/models/user/user-all.model';
+import { User } from 'src/app/models/user/user-all.model';
 import { UserAllService } from 'src/app/services/user/user-all.service';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { notifiCations } from 'src/app/models/notifications/notifications.model';
@@ -32,16 +32,16 @@ export class Tab1Page implements OnInit {
   @ViewChild('fileInput', { static: false }) fileInput;
   selectedFile: File;
   previewImageUrl: string;
-
+  selectedUserId: string = '';
   todayNumber: number = Date.now();
   currentFood = undefined;
-  user_all!: UserAll[];
-  notifi_!: notifiCations[];
+  user_all: User[] = [];
+  notifi_: notifiCations[];
   currentUser: any;
   idFormselcet: any;
   fName: any;
   lName: any;
-  notificationGet!: notifiCations[];
+  notificationGet: notifiCations[];
   check_doc = false;
 
 
@@ -108,20 +108,17 @@ export class Tab1Page implements OnInit {
    }
   ngOnInit() {
     this.retrieveUserAlls();
-    this.currentUser = this.storageService.getUser();
-    this.retrieveNotifications();
-    console.log(this.currentUser)
+    // this.retrieveNotifications();
 
 
   }
+
   retrieveUserAlls(): void {
     this.userAllService.getAll()
       .subscribe({
-        next: (data) => {
+        next: (data: User[]) => {
           this.user_all = data;
-          console.log(this.user_all)
-
-
+          console.log(this.user_all);
         },
         error: (e) => console.error(e)
       });
@@ -141,25 +138,24 @@ export class Tab1Page implements OnInit {
 
   
 
-  currentTutorial: UserAll = {};
-  currentIndex = -1;
-  firstname = '';
-
+  currentTutorial: User | null = null;
+  currentIndex: number = -1;
+  firstname: string = '';
   searchName(): void {
-    this.currentTutorial = {};
-    this.currentIndex = -1;
-
-    this.userAllService.findByName(this.firstname)
+    console.log('Searching for name:', this.firstname);
+    this.userAllService.findByFirstName(this.firstname)
       .subscribe({
-        next: (data) => {
+        next: (data: User[]) => {
           this.user_all = data;
-          console.log(this.user_all);
-
+          console.log('Data received:', this.user_all);
         },
-        error: (e) => console.error(e)
+        error: (e) => {
+          console.error('Error fetching data:', e);
+          alert('Failed to fetch data. Please check the console for more details.');
+        }
       });
   }
-
+  
 
   @ViewChild(IonModal) modal!: IonModal;
 
@@ -173,7 +169,7 @@ export class Tab1Page implements OnInit {
   confirm() {
     this.modal.dismiss(this.name, 'confirm');
     this.retrieveUserByID(this.name);
-
+    console.log(this.name)
   }
 
   onWillDismiss(event: Event) {
@@ -583,4 +579,6 @@ paragraphs.forEach((paragraph: string) => {
     console.log(this.selectedFile);
     // You can now use the selected file for further processing
   }
+
+  
 }

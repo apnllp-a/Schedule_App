@@ -3,6 +3,7 @@ import { AuthService } from './_services/auth.service';
 import { StorageService } from './_services/storage.service';
 import { EventBusService } from './_shared/event-bus.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,9 @@ export class AppComponent {
   username?: string;
   eventBusSub?: Subscription;
 
-  constructor(private storageService: StorageService, private authService: AuthService, private eventBusService: EventBusService) {}
+  constructor(private router: Router,private storageService: StorageService, private authService: AuthService, private eventBusService: EventBusService) { }
 
-  
+
 
 
   ngOnInit(): void {
@@ -34,6 +35,11 @@ export class AppComponent {
       this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
 
       this.username = user.username;
+
+      const video = document.getElementById('intro-video') as HTMLVideoElement;
+      video.onended = () => {
+        video.style.display = 'none';
+      };
     }
 
 
@@ -42,17 +48,9 @@ export class AppComponent {
     });
   }
   logout(): void {
-    this.authService.logout().subscribe({
-      next: res => {
-        console.log(res);
-        this.storageService.clean();
-
-        window.location.reload();
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    window.location.reload();
   }
 
 }

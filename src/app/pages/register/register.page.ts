@@ -21,6 +21,7 @@ export class RegisterPage implements OnInit {
   showpass = false;
   passToggleIcon = 'eye';
   ionicForm!: FormGroup;
+  submitted = false;
 
 //แบบใหม่แบบสับ
   form: any = {
@@ -31,6 +32,14 @@ export class RegisterPage implements OnInit {
     password: null,
     department: 'Employee'
   };
+  user = {
+    username: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    department: ''
+  };
+
   isSuccessful = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -80,7 +89,6 @@ export class RegisterPage implements OnInit {
 
 
   
-  submitted = false;
   h3_alert: string | undefined;
   p_alert: string | undefined;
   user_all!: UserAll[];
@@ -96,22 +104,50 @@ export class RegisterPage implements OnInit {
     return (control.value || '').trim().length? null : { 'whitespace': true };       
 }
 
-  onSubmit(): void {
-    const { username, email, password, name} = this.form;
+  // onSubmit(): void {
+  //   const { username, email, password, name} = this.form;
 
-    this.authService.register(username, email, password,name).subscribe({
-      next: data => {
-        console.log(data);
-        this.isSuccessful = true;
+  //   this.authService.register(username, email, password,name).subscribe({
+  //     next: data => {
+  //       console.log(data);
+  //       this.isSuccessful = true;
+  //       this.isSignUpFailed = false;
+  //       this.reloadPage()
+  //     },
+  //     error: err => {
+  //       this.errorMessage = err.error.message;
+  //       this.isSignUpFailed = true;
+  //     }
+  //   });
+  // }
+
+  saveUser(): void {
+    const data = {
+      username: this.user.username,
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      password: this.user.password,
+      department: this.user.department
+    };
+
+    this.authService.register(data)
+      .subscribe({
+        next: (res) => {
+          console.log(res);
+          this.submitted = true;
+          if (this.submitted) {
+              this.isSuccessful = true;
         this.isSignUpFailed = false;
         this.reloadPage()
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
-        this.isSignUpFailed = true;
-      }
-    });
+          }
+        },
+        error: err => {
+          this.errorMessage = err.error.message;
+          this.isSignUpFailed = true;
+        }
+      });
   }
+
   reloadPage(): void {
     // window.location.reload();
     this.router.navigate(['/login']); 
@@ -276,24 +312,7 @@ export class RegisterPage implements OnInit {
 
   }
 
-  registerUser() {
-    const user = {
-      username: 'testuser',
-      firstName: 'Test',
-      lastName: 'User',
-      password: 'testpassword',
-      department: 'IT'
-    };
 
-    this.authService.registerx(user).subscribe(
-      (response) => {
-        console.log('Registration successful:', response);
-      },
-      (error) => {
-        console.error('Registration failed:', error);
-      }
-    );
-  }
 
 
   

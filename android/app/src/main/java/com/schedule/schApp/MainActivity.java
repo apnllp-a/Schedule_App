@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.schedule.schApp;
 
 import com.getcapacitor.BridgeActivity;
 

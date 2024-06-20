@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
-const AUTH_API = 'http://localhost:8080/api/auth/';
+const AUTH_API = 'http://localhost:8080/auth';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json',
@@ -13,67 +13,39 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  private baseUrl = 'http://localhost:8080/auth';
 
-    // register, login, logout
+  constructor(private http: HttpClient) { }
 
-    refreshToken() {
-      return this.http.post(AUTH_API + 'refreshtoken', {  }, httpOptions);
-    }
-  
+  register(user: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, user);
+  }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(
-      AUTH_API + 'signin',
-      {
-        username,
-        password,
-        
-      },
-      httpOptions
+  login(credentials: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, credentials).pipe(
+      map((response: any) => {
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('username', response.username);
+          localStorage.setItem('role', response.role);
+          localStorage.setItem('department', response.department);
+        }
+        return response;
+      })
     );
   }
 
-  register(username: string, email: string, password: string, name: string): Observable<any> {
-    return this.http.post(
-      AUTH_API + 'signup',
-      {
-        username,
-        email,
-        password,
-        name
-      },
-      httpOptions
-    );
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('department');
   }
 
-  
-
-  logout(): Observable<any> {
-    return this.http.post(AUTH_API + 'signout', { }, httpOptions);
+  get isLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
   }
-
-
-  private apiUrl = 'http://localhost:8080/users'; // Update with your actual backend URL
-
-
-  registerx(user: any): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      withCredentials: true  // Ensure credentials are sent with the request
-    };
-    return this.http.post(`${this.apiUrl}/register`, user, httpOptions);
-  }
-
-  loginx(credentials: { username: string, password: string }): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      withCredentials: true  // Ensure credentials are sent with the request
-    };
-    return this.http.post(`${this.apiUrl}/login`, credentials, httpOptions);
+  getRole(): string | null {
+    return localStorage.getItem('role');
   }
 }

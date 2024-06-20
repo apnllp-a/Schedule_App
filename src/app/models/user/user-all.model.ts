@@ -21,3 +21,15 @@ export interface UserAlls {
     createdAt: Date;
     published: boolean;
 }
+export interface User {
+    username: string;
+    firstName: string;
+    lastName: string;
+    password?: string;  // Optional because you might not want to send the password to the frontend
+    email?: string;
+    department: string;
+    role: 'IT' | 'HR' | 'Board' | 'Head' | 'Employee';
+    status: 'active' | 'pending' | 'disabled' | 'inactive';
+    createdAt: Date;
+    updatedAt: Date;
+  }

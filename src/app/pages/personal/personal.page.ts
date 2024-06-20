@@ -9,6 +9,7 @@ import { dataUsers } from 'src/app/models/data-users/data_users.model';
 import { HttpHeaders } from '@angular/common/http';
 import * as bcrypt from 'bcryptjs';
 import { tap } from 'rxjs';
+import { AuthService } from 'src/app/_services/auth.service';
 // Create an instance of HttpHeaders and set the desired headers
 
 
@@ -68,7 +69,7 @@ export class PersonalPage implements OnInit {
     published: false
   };
 
-  constructor(private Services: ServicesAllService, private router: Router, private alertController: AlertController, private storageService: StorageService, private eventBusService: EventBusService) {
+  constructor(private authService: AuthService,private Services: ServicesAllService, private router: Router, private alertController: AlertController, private storageService: StorageService, private eventBusService: EventBusService) {
     // Example usage
 
 
@@ -306,10 +307,10 @@ export class PersonalPage implements OnInit {
     window.location.reload();
   }
 
-  logout() {
-    this.eventBusService.emit(new EventData('logout', null));
-    this.router.navigate(['/login']);
-  }
+  // logout() {
+  //   this.eventBusService.emit(new EventData('logout', null));
+  //   this.router.navigate(['/login']);
+  // }
 
   toggle_setting(): void {
     this.mode_settingToggle = !this.mode_settingToggle;
@@ -437,5 +438,10 @@ export class PersonalPage implements OnInit {
   }
 
 
+  logout(): void {
+    this.authService.logout();
+    this.storageService.clean()
+    this.router.navigate(['/login']);
+  }
 
 }

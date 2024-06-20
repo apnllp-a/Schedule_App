@@ -28,6 +28,11 @@ export class LoginPage implements OnInit {
     username: null,
     password: null
   };
+
+  credentials = {
+    username: '',
+    password: ''
+  };
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
@@ -73,7 +78,7 @@ export class LoginPage implements OnInit {
   onSubmit(): void {
     const { username, password } = this.form;
 
-    this.authService.login(username, password).subscribe({
+    this.authService.login(this.credentials).subscribe({
       next: data => {
         this.storageService.saveUser(data);
         
@@ -154,21 +159,6 @@ export class LoginPage implements OnInit {
   }
 
     
-  loginUserX() {
-    const credentials = {
-      username: 'testuser',
-      password: 'testpassword'
-    };
-
-    this.authService.loginx(credentials).subscribe(
-      (response) => {
-        console.log('Login successful:', response);
-        // Store the token and user details in local storage or a service for later use
-      },
-      (error) => {
-        console.error('Login failed:', error);
-      }
-    );
-  }
+  
 
 }

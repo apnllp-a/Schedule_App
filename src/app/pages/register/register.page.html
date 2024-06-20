@@ -29,26 +29,32 @@
       <form [formGroup]="myGroup" *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm"
         novalidate>
         <ion-item fill="outline" class="custom">
-          <ion-label position="floating">Name : </ion-label>
+          <ion-label position="floating">FirstName : </ion-label>
           <ion-input [ngModelOptions]="{standalone: true}" name="name" minlength="3" maxlength="20" #name="ngModel" type="text" [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
-            [(ngModel)]="form.name" 
+            [(ngModel)]="user.firstName" 
+            required ></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom">
+          <ion-label position="floating">LastName : </ion-label>
+          <ion-input [ngModelOptions]="{standalone: true}" name="name" minlength="3" maxlength="20" #name="ngModel" type="text" [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
+            [(ngModel)]="user.lastName" 
             required ></ion-input>
         </ion-item>
         <div *ngIf="name.hasError('whitespace')">Please enter valid data</div>
         <ion-item fill="outline" class="custom">
-          <ion-label position="floating">Email : </ion-label>
-          <ion-input type="email" formControlName="email" clearInput [(ngModel)]="form.email"
-             email required></ion-input>
+          <ion-label position="floating">Department : </ion-label>
+          <ion-input type="text" formControlName="email" clearInput [(ngModel)]="user.department"
+              required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="custom">
           <ion-label position="floating">Username : </ion-label>
-          <ion-input type="text" formControlName="username" clearInput [(ngModel)]="form.username"
+          <ion-input type="text" formControlName="username" clearInput [(ngModel)]="user.username"
              required></ion-input>
         </ion-item>
         <ion-item fill="outline" class="pass">
           <ion-label position="floating">Password : </ion-label>
           <ion-input [type]="showpass ? 'text':'password'" formControlName="password" clearInput
-            [(ngModel)]="form.password"  required></ion-input>
+            [(ngModel)]="user.password"  required></ion-input>
           <ion-icon (click)="togglePass()" style="color: #769FCD;" slot="end" [name]="passToggleIcon"></ion-icon>
         </ion-item>
       </form>
@@ -56,7 +62,7 @@
 
     </ion-card-content>
     <ion-card-content>
-      <ion-button (click)="registerUser()" style="width: 100%;">Sign Up !</ion-button>
+      <ion-button (click)="saveUser()" style="width: 100%;">Sign Up !</ion-button>
     </ion-card-content>
 
   </ion-card>

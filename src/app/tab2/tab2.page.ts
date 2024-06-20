@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../_services/auth.service';
+import { StorageService } from '../_services/storage.service';
 
 @Component({
   selector: 'app-tab2',
@@ -7,7 +11,7 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  constructor(private router: Router,private authService: AuthService, private storageService: StorageService, private http: HttpClient,) {}
 
 
   handleRefresh(event:any) {
@@ -16,5 +20,7 @@ export class Tab2Page {
       event.target.complete();
     }, 2000);
   };
+
+  
 
 }
